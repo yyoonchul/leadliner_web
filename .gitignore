@@ -1,0 +1,4 @@
+leadliner.db
+__pycache__
+migrations
+*.pyc

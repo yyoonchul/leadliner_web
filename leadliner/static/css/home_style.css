@@ -1,0 +1,141 @@
+:root {
+    --main_black: #191919;
+    --main_white: #fcfcfc;
+    --main_red: #c1292e;
+  }
+
+/*상단 바*/
+header {
+    display: flex; /* flexbox 적용 */
+    justify-content: space-between; /* 수평 가운데 정렬 */
+    align-items: center; 
+    height: 90px;
+    text-align: center; /* 로고 가운데 정렬 */ 
+    background-color: var(--main_white); 
+    position: relative; 
+    background-color: var(--main_white);
+}
+
+.divider {
+    position: absolute; /* divider에 position: absolute 추가 */
+    bottom: 0; /* 하단에 고정 */
+    left: 0;
+    width: 100%; /* 디바이더 너비 설정 */
+    height: 1.5px; /* 디바이더 높이 설정 */
+    background-color: #E6E8EC; /* 디바이더 색상 설정 */
+}
+
+img {
+    max-width: 200px;/* 로고 이미지 최대 너비 */
+    position: absolute; /* 로고 이미지에 position: absolute 추가 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.mypage-button {
+    padding: 8px 15px;
+    font-size: 15px;
+    background-color:var(--main_white);
+    color:var(--main_black);
+    border: none;
+    position: absolute; /* 마이페이지 버튼에 position: absolute 추가 */
+    top: 50%;
+    right: 0px;
+    transform: translateY(-50%);
+    cursor: pointer; /* 버튼 커서 */
+    text-decoration: underline; /* 밑줄 추가 */
+    text-underline-offset: 5px;
+    text-decoration-color: var(--main_red);
+}
+/*마이페이지 버튼 클릭시 팝업*/
+
+.dropdown {
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    right: 100px; 
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    background-color: var(--main_white);
+    min-width: 120px;
+    box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    font-family: 'NanumSquare', sans-serif;
+    color: #797979;
+    font-size: 15px;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.show {
+    display: block;
+}
+
+/*기사 본문*/
+.container {
+    background-color: var(--main_white);
+    max-width: 800px;
+    margin: 20px auto; /* 위아래 여백 추가 */
+}
+
+body {
+    font-family: 'NanumSquare', sans-serif;
+    background-color: var(--main_white); /* 원하는 배경색으로 변경 */
+}
+
+h1{
+    text-align: center;
+    font-size: 30px;
+    border-bottom: 1px solid #BABABA;
+    margin-bottom: 0px;
+    padding-bottom: 20px;
+}
+
+.news-article {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.keyword {
+    display: inline-block;
+    background-color: #eee;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.news-article h2 {
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.news-article p {
+    line-height: 1.6;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.article-link{
+    text-decoration: none;
+    background-color: var(--main_white);
+    color: var(--main_black);
+    font-weight: bold;
+    border-bottom: 2px solid var(--main_red);
+    cursor: pointer;
+}
+

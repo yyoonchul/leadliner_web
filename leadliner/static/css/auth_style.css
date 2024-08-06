@@ -1,0 +1,137 @@
+:root {
+    --main_black: #191919;
+    --main_white: #fcfcfc;
+    --main_red: #c1292e;
+  }
+
+body {
+    font-family: 'NanumSquare', sans-serif;
+    margin: 0; /* body의 기본 margin 제거 */
+    background-color: var(--main_white);
+}
+
+.container {
+    display: flex; /* flexbox 사용 */
+    min-height: 100vh;
+}
+
+.image-section {
+    width: 72%; /* 이미지 영역 72% */
+    position: relative; /* overlay를 위한 상대 위치 설정 */
+}
+
+.image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지 크기 조절 */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* 불투명도 0.7의 검정색 */
+}
+
+.logo-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 가운데 정렬 */
+    text-align: center;
+    font-family: 'MaruBuriLight';
+    font-size: 18px;
+    color: var(--main_white); /* 텍스트 색상 흰색 */
+}
+
+.logo-container img {
+    width: 250px; /* 로고 크기 조절 (필요에 따라 변경) */
+    margin-bottom: 10px;
+}
+
+.form-section {
+    width: 28%; /* 폼 영역 28% */
+    background-color: var(--main_white);
+    padding: 30px;
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    justify-content: center; /* 수직 가운데 정렬 */
+    align-items: center;
+}
+
+.form-section form {
+    display: flex; /* flexbox 사용 */
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center; /* 수평 가운데 정렬 */
+    width: 100%; /* 너비를 부모 요소만큼 설정 */
+}
+
+h1 {
+    font-family: 'NanumSquareExtraBold';
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 40px;
+    width: 80%;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: 'NanumSquareBold';
+    color: #425466;
+    font-size: 17px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    height: 85%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #EDF2F7;
+}
+
+button[type="submit"] {
+    width: 80%;
+    height: 100%;
+    background-color: #191919;
+    color: #fcfcfc;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 90px;
+    cursor: pointer;
+    font-size: 17px;
+    font-family: 'NanumSquareBold';
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.terms {
+    font-size: 12px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 50px;
+}
+
+
+a{
+    text-decoration: none;
+    color: #191919;
+    font-weight: bolder;
+}

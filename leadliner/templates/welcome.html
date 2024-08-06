@@ -1,0 +1,26 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>   
+리드라이너 - 환영합니다!</title>
+    <link rel="stylesheet" href="../static/css/onboarding_style.css">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="../static/assets/logo(black).png" alt="Leadliner 로고">
+        <div class="divider"></div>
+    </header>
+    <div class="container">
+        <h1 class="welcome-title">리드라이너에 오신 것을 환영합니다!</h1>
+        <p class="welcome-sub-title">이제 나만의 키워드로 업데이트 되는 뉴스를 매일 만나 보세요</p>
+        <button type="button" class="onboarding-done-button" onclick="redirectToHome()">나만의 뉴스 보러가기</button>
+    </div>
+    <script>
+        function redirectToHome() {
+            window.location.href = "{{ url_for('main.home') }}";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 리드라이너-회원가입</title>
+    <link rel="stylesheet" href="../static/css/auth_style.css"> 
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="image-section">
+            <img src="../static/assets/welcome page image.jpg" alt="이미지">
+            <div class="overlay">
+                <div class="logo-container">
+                    <img src="../static/assets/logo(white).png" alt="로고">
+                    <p>여러분이 궁금한 뉴스만, 골라보세요.</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-section">
+            <h1>리드라이너 시작하기</h1>
+            <form method="post">
+                {{ form.csrf_token }}
+                {% include "form_errors.html" %}
+                <div class="input-group">
+                    <label for="nickname">닉네임</label>
+                    <input type="text" name="username" id="nickname" placeholder="이름, 혹은 별명을 적어주세요" required value="{{ form.username.data or '' }}">
+                </div>
+                <div class="input-group">
+                    <label for="email">이메일</label>
+                    <input type="email" name="email" id="email" placeholder="이메일 주소를 입력해 주세요" required value="{{ form.email.data or '' }}">
+                </div>
+                <div class="input-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" name="password1" id="password" placeholder="영문, 숫자를 혼합해 8자 이상의 비밀번호를 적어주세요" required value="{{ form.password1.data or '' }}">
+                </div>
+                <div class="input-group">
+                    <label for="confirm-password">비밀번호 확인</label>
+                    <input type="password" name="password2" id="confirm-password" placeholder="비밀번호를 다시 한번 적어주세요" required value="{{ form.password2.data or '' }}">
+                </div>
+                    <p class="terms">아래 버튼을 눌러 계정을 만드시면 <br> <a href="{{url_for('auth.signup_policy')}}">개인정보 규정</a>을 포함한 약관에 동의하시는 것으로 간주됩니다.
+                    </p>
+                <button type="submit">계정 만들기</button>
+                <p class="login-link">이미 계정이 있으신가요? <a href="{{url_for('auth.login')}}">로그인 하기</a></p>
+                </form>
+        </div>
+    </div>
+</body>
+</html>

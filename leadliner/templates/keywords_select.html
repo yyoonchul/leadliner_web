@@ -1,0 +1,101 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>   
+리드라이너 - 뉴스 키워드 선택</title>
+    <link rel="stylesheet" href="../static/css/onboarding_style.css">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="../static/assets/logo(black).png" alt="Leadliner 로고">
+        <div class="divider"></div>
+    </header>
+    <div class="container">
+        <h1>뉴스를 보고 싶은 키워드를 골라 주세요</h1>
+        <p class="sub-title">더 원하시는 키워드가 있다면 직접 입력해 주세요</p>
+        <p class="keyword-description">리드라이너 유저들이 가장 많이 찾아보는 키워드들이에요</p>
+        <div class="keyword-list">
+            {% for keyword in keywords %}
+            <button type="button" class="keyword" onclick="toggleKeyword(this)">
+                {{ keyword }}
+                <span class="icon">+</span>
+            </button>
+            {% endfor %}
+        </div>
+
+        <div class="keyword custom-keyword">
+            <input type="text" id="custom-keyword-input" placeholder="직접 입력하기">
+            <button type="button" class="icon add-button" onclick="addCustomKeyword()">+</button>
+        </div>
+        <button type="button" class="create-button" onclick="submitKeywords()">나만의 뉴스 만들기</button>
+        <p class="create-button-comment">키워드 리스트는 나중에 수정할 수 있어요</p>
+    </div>
+    <script>
+        function toggleKeyword(button) {
+    button.classList.toggle('selected');
+    const icon = button.querySelector('.icon');
+    if (button.classList.contains('selected')) {
+        icon.textContent = '✓';
+    } else {
+        icon.textContent = '+';
+    }}
+
+        function addCustomKeyword() {
+            const input = document.getElementById('custom-keyword-input');
+            const keyword = input.value.trim();
+            
+            if (keyword) {
+                const keywordList = document.querySelector('.keyword-list');
+                const newButton = document.createElement('button');
+                newButton.type = 'button';
+                newButton.className = 'keyword selected';
+                newButton.onclick = function() { toggleKeyword(this); };
+                newButton.innerHTML = `${keyword}<span class="icon">✓</span>`;
+                
+                keywordList.appendChild(newButton);
+                input.value = '';  // Clear the input field
+            }
+        }
+
+        function submitKeywords() {
+            const selectedKeywords = Array.from(document.querySelectorAll('.keyword.selected'))
+                .map(button => {
+                    // Remove the icon span and trim any whitespace
+                    const keywordText = button.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+                    // Remove any remaining special characters or extra spaces
+                    return keywordText.replace(/[^가-힣a-zA-Z0-9\s]/g, '').trim();
+                })
+                .filter(keyword => keyword !== ''); // Remove any empty strings
+            
+            fetch('/onboarding/submit-keywords', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ keywords: selectedKeywords }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/onboarding/welcome';
+                } else {
+                    alert('키워드 제출에 실패했습니다. 다시 시도해 주세요.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('오류가 발생했습니다. 다시 시도해 주세요.');
+            });
+        }
+        // Add event listener for Enter key in the input field
+        document.getElementById('custom-keyword-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                addCustomKeyword();
+            }
+        });
+    </script>
+</body>
+</html>

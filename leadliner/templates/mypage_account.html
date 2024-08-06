@@ -1,0 +1,134 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>   
+리드라이너 - 계정정보</title>
+    <link rel="stylesheet" href="../static/css/mypage_style.css">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="../static/assets/logo(black).png" alt="Leadliner 로고">
+        <div class="divider"></div>
+        <a href="{{url_for('main.home')}}" class="home-button">home</a>
+    </header>
+    <main>
+        <nav class="sub-nav">
+            <a href="{{url_for('mypage.my_keyword')}}" class="secure-link">키워드 설정</a>
+            <a href="{{url_for('mypage.my_account')}}" class="current-page">계정</a>
+        </nav>
+        
+        <section class="account-info">
+            <form method="post" id="accountForm">
+                {{ form.csrf_token }}
+                {% include "form_errors.html" %}
+                <div class="input-group">
+                    <label for="nickname">닉네임</label>
+                    <input type="text" name="username" id="nickname" placeholder="{{nickname}}" required value="{{ form.username.data or '' }}">
+                </div>
+                <div class="input-group">
+                    <label for="email">이메일</label>
+                    <input type="email" name="email" id="email" placeholder="{{email}}" required value="{{ form.email.data or '' }}">
+                </div>
+                <button type="submit">저장</button>
+            </form>
+
+        </section>
+        
+        <div class="logout-section">
+            <a href="{{url_for('mypage.logout')}}" class="logout">로그아웃</a>
+        </div>
+        
+        <div class="withdraw-section">
+            <button class="withdraw" id="withdrawBtn">계정탈퇴</button>
+        </div>
+
+        <div id="withdrawModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="withdraw-description">
+                    <h2>정말로 탈퇴하시겠어요?</h2>
+                    <p>{{nickname}}님과 함께해서 즐거웠어요.</p>
+                    <p>탈퇴하시면 모든 계정 정보가 영구히 지워지게 됩니다.</p>
+                    <p>탈퇴를 확인하기 위해 아래 란에 "계정탈퇴"라고 적은 후 계정탈퇴 버튼을 눌러주세요.</p>
+                </div>
+                <form id="withdrawForm">
+                    <div>
+                        <input type="text" id="withdrawConfirm" required>
+                    </div>
+                    <div>
+                        <button type="submit" class="final-withdraw" id="finalWithdraw" onclick="withdraw()">계정탈퇴</button>
+                        <button type="button" class="cancel-withdraw" id="cancelWithdraw">취소하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+    <script>
+        //탈퇴 팝업
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = document.getElementById("withdrawModal");
+            var btn = document.getElementById("withdrawBtn");
+            var span = document.getElementsByClassName("close")[0];
+            var cancelBtn = document.getElementById("cancelWithdraw");
+            var finwtdrwBtn = document.getElementById("finalWithdraw");
+    
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+    
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+    
+            cancelBtn.onclick = function() {
+                modal.style.display = "none";
+            }
+    
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        });
+
+        function withdraw() {
+    var confirmInput = document.getElementById('withdrawConfirm');
+    if (confirmInput.value === '계정탈퇴') {
+        fetch('/mypage/withdraw', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}',
+            },
+            body: JSON.stringify({}),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('계정이 성공적으로 탈퇴되었습니다.');
+                window.location.href = data.redirect_url;
+            } else {
+                alert('탈퇴 처리 중 오류가 발생했습니다: ' + data.message);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('탈퇴 처리 중 오류가 발생했습니다.');
+        });
+    } else {
+        alert('정확히 "계정탈퇴"라고 입력해주세요.');
+    }
+}
+
+        document.getElementById('withdrawConfirm').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                withdraw();
+            }
+        });
+
+</script>
+</body>
+</html>

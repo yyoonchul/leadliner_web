@@ -1,0 +1,40 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 리드라이너-로그인</title>
+    <link rel="stylesheet" href="../static/css/auth_style.css">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="image-section">
+            <img src="../static/assets/welcome page image.jpg" alt="이미지">
+            <div class="overlay">
+                <div class="logo-container">
+                    <img src="../static/assets/logo(white).png" alt="로고">
+                    <p>여러분이 궁금한 뉴스만, 골라보세요.</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-section">
+            <h1>로그인 하기</h1>
+            <form method="post">
+                {{ form.csrf_token }}
+                {% include "form_errors.html" %}
+                <div class="input-group">
+                    <label for="email">이메일</label>
+                    <input type="email" name="email" id="email" placeholder="이메일 주소를 입력해 주세요" required value="{{ form.email.data or '' }}">
+                </div>
+                <div class="input-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" name="password" id="password" placeholder="비밀번호를 입력해 주세요" required value="{{ form.password.data or '' }}">
+                </div>
+                <button type="submit">로그인</button>
+                <p class="signup-link">리드라이너가 처음이신가요? <a href="{{url_for('auth.signup')}}">가입하기</a></p>
+                </form>
+        </div>
+    </div>
+</body>
+</html>

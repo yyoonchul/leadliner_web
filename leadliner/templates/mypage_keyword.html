@@ -1,0 +1,119 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>   
+리드라이너 - 키워드수정</title>
+    <link rel="stylesheet" href="../static/css/mypage_style.css">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="../static/assets/logo(black).png" alt="Leadliner 로고">
+        <div class="divider"></div>
+        <a href="{{url_for('main.home')}}" class="home-button">home</a>
+    </header>
+    <main>
+        <nav class="sub-nav">
+            <a href="{{url_for('mypage.my_keyword')}}" class="current-page">키워드 설정</a>
+            <a href="{{url_for('mypage.my_account')}}" class="secure-link">계정</a>
+        </nav>
+        <div class="selected-container">
+            <p class="keyword-description">현재 구독 중인 키워드들이에요</p>
+            <div class="keyword-list">
+                {% for keyword in keywords %}
+                <button type="button" class="keyword selected" onclick="toggleKeyword(this)">
+                    {{ keyword }}
+                    <span class="icon">✓</span>
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="suggested-container">
+            <p class="keyword-description">다른 유저들이 가장 많이 찾아보는 키워드들이에요</p>
+            <div class="keyword-list">
+                {% for keyword in preset_keywords %}
+                <button type="button" class="keyword" onclick="toggleKeyword(this)">
+                    {{ keyword }}
+                    <span class="icon">+</span>
+                </button>
+                {% endfor %}
+               
+            </div>
+        </div>
+            <div class="keyword custom-keyword">
+                <input type="text" id="custom-keyword-input" placeholder="직접 입력하기">
+                <button type="button" class="icon add-button" onclick="addCustomKeyword()">+</button>
+            </div>
+            <button type="button" class="save-keyword-button" onclick="saveKeywords()">키워드 저장하기</button>
+
+    </main>
+    <script>
+        function toggleKeyword(button) {
+    button.classList.toggle('selected');
+    const icon = button.querySelector('.icon');
+    if (button.classList.contains('selected')) {
+        icon.textContent = '✓';
+    } else {
+        icon.textContent = '+';
+    }}
+
+    function addCustomKeyword() {
+            const input = document.getElementById('custom-keyword-input');
+            const keyword = input.value.trim();
+            
+            if (keyword) {
+                const keywordList = document.querySelector('.keyword-list');
+                const newButton = document.createElement('button');
+                newButton.type = 'button';
+                newButton.className = 'keyword selected';
+                newButton.onclick = function() { toggleKeyword(this); };
+                newButton.innerHTML = `${keyword}<span class="icon">✓</span>`;
+                
+                keywordList.appendChild(newButton);
+                input.value = '';  // Clear the input field
+            }
+        }
+        
+        function saveKeywords() {
+        const selectedKeywords = Array.from(document.querySelectorAll('.keyword.selected'))
+            .map(button => {
+                const keywordText = button.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim();
+                return keywordText.replace(/[^가-힣a-zA-Z0-9\s]/g, '').trim();
+            })
+            .filter(keyword => keyword !== '');
+        
+        fetch('/mypage/save-keywords', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'  // Add CSRF token
+            },
+            body: JSON.stringify({ keywords: selectedKeywords }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = data.redirect_url;  // Use the redirect URL from the server
+            } else {
+                alert('키워드 제출에 실패했습니다: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('오류가 발생했습니다. 다시 시도해 주세요.');
+        });
+    }
+
+
+        document.getElementById('custom-keyword-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                addCustomKeyword();
+            }
+        });
+
+//비밀번호 확인 팝업
+    </script>
+</body>
+</html>

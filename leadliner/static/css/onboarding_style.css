@@ -1,0 +1,179 @@
+:root {
+    --main_black: #191919;
+    --main_white: #fcfcfc;
+    --main_red: #c1292e;
+  }
+
+  body {
+    font-family: 'NanumSquare', sans-serif;
+    background-color: var(--main_white);
+}
+
+/* 상단 바 로고 */
+header {
+    display: flex; /* flexbox 적용 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; 
+    height: 90px;
+    text-align: center; /* 로고 가운데 정렬 */ 
+    background-color: var(--main_white); 
+    position: relative; 
+}
+
+.divider {
+    position: absolute; /* divider에 position: absolute 추가 */
+    bottom: 0; /* 하단에 고정 */
+    left: 0;
+    width: 100%; /* 디바이더 너비 설정 */
+    height: 1.5px; /* 디바이더 높이 설정 */
+    background-color: #E6E8EC; /* 디바이더 색상 설정 */
+}
+
+img {
+    max-width: 200px; /* 로고 이미지 최대 너비 */
+}
+
+/*키워드 선택 메인 화면*/
+body {
+    font-family: 'NanumSquare', sans-serif;
+    text-align: center;
+    background-color: var(--main_white);
+}
+
+.container {
+    max-width: 800px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    padding: 15px;
+    background-color: var(--main_white);
+}
+
+
+
+h1 {
+    font-size: 30px;
+}
+
+.sub-title {
+    font-size: 18px;
+    color: #787878;
+    margin-bottom: 40px;
+    margin-top: 10px;
+}
+
+.keyword-description {
+    font-size: 12px;
+    color: #8c8c8c;
+    text-align: left;
+    margin-bottom: 10px;
+    margin-left: 40px;
+}
+
+.keyword-list {
+    display: flex;
+    flex-wrap: wrap; /* 여러 줄로 배치 */
+    justify-content: center;
+    gap: 10px; /* 키워드 간 간격 */
+    margin-bottom: 20px;
+}
+
+.keyword {
+    display: flex; /* flexbox 적용 */
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: space-between; /* 아이콘과 텍스트 사이 간격 */
+    padding: 8px 15px;
+    border: 1.5px solid #7c7b7b; /* 기본 테두리 색상 */
+    border-radius: 20px;
+    background-color: var(--main_white);
+    cursor: pointer;
+    font-family: 'NanumSquare';
+    font-size: 85%;
+}
+
+.keyword.selected {
+    background-color: var(--main_white); /* 배경색 흰색으로 변경 */
+    border-color: var(--main_red);
+    border-width: 1.5px; 
+}
+
+.icon {
+    margin-left: 10px; /* 아이콘과 텍스트 사이 간격 */
+    font-size: 20px;
+}
+
+.keyword.selected .icon {
+    font-size: 20px;
+    color: var(--main_red); /* 선택된 타일 아이콘 색상 변경 */
+}
+
+.custom-keyword {
+    justify-content: center;
+    width: 20%;
+    height: 40px;
+    box-sizing: border-box;
+    display: flex; /* flexbox 적용 */
+    align-items: center; /* 수직 가운데 정렬 */
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: var(--main_white);
+    margin-bottom: 20px; 
+    margin: 20 auto;/* 아래 여백 추가 */
+}
+
+.custom-keyword input[type="text"] {
+    width: 100%;
+    height: 100%;
+    flex-grow: 1; /* 입력 필드가 남는 공간을 모두 차지하도록 설정 */
+    border: none; /* 입력 필드 테두리 제거 */
+    padding: 0; /* 입력 필드 패딩 제거 */
+    margin-right: 0px; /* 입력 필드와 아이콘 사이 간격 */
+}
+
+.add-button {
+    background-color: transparent; /* 버튼 배경 투명 */
+    border: none; /* 버튼 테두리 제거 */
+    cursor: pointer;
+    font-size: 20px; /* 아이콘 크기 조절 (원하는 값으로 변경) */
+}
+
+.create-button {
+    background-color: var(--main_white);
+    color: var(--main_red);
+    padding: 10px 20px;
+    border: 2px solid var(--main_red);
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 50px;
+}
+
+.create-button-comment {
+    font-size: 12px;
+    color: #8c8c8c;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* 온보딩 완료 환영 화면 */
+
+.welcome-title{
+    margin-top: 150px;
+    margin-bottom: 10px;
+}
+
+.welcome-sub-title{
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.onboarding-done-button{
+    font-family: 'NanumSquareBold';
+    font-size: 15px;
+    background-color: var(--main_white);
+    color: var(--main_red);
+    width: 30%;
+    padding: 10px 20px;
+    border: 2px solid var(--main_red);
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 50px;
+}

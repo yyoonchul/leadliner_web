@@ -1,0 +1,54 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>   
+리드라이너 - 홈</title>
+    <link rel="stylesheet" href="../static/css/home_style.css">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img src="../static/assets/logo(black).png" alt="Leadliner 로고">
+        <div class="divider"></div>
+        <div class="dropdown">
+            <button class="mypage-button" onclick="toggleDropdown()">mypage</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="{{url_for('mypage.my_account')}}" class="secure-link">계정</a>
+                <a href="{{url_for('mypage.my_keyword')}}" class="secure-link">키워드 편집</a>
+                <a href="{{url_for('main.logout')}}">로그아웃</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>{{nickname}}님의 뉴스 페이지</h1>
+        {% for news in news_data %}
+        <div class="news-article">
+            <span class="keyword">{{news.키워드}}</span>
+            <h2>{{news.제목}}</h2>
+            <p>{{news.본문}}<a class="article-link" href="{{news.링크}}">(기사 원문 보기)</a></p>
+        </div>
+        {% endfor %}
+    </div>
+    <script>
+         function toggleDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // 드롭다운 메뉴 외부를 클릭하면 메뉴가 닫히도록 설정
+        window.onclick = function(event) {
+            if (!event.target.matches('.mypage-button')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }   
+
+    </script>
+</body>
+</html>
