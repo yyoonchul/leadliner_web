@@ -135,3 +135,16 @@ a{
     color: #191919;
     font-weight: bolder;
 }
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    .image-section {
+        display: none;
+    }
+    .form-section {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

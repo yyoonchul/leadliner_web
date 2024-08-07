@@ -139,3 +139,46 @@ h1{
     cursor: pointer;
 }
 
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    img[src*="logo(black).png"] {
+        max-width: 150px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dropdown {
+        position: absolute;
+        right: 0;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .news-article {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+
+    .news-article h2 {
+        font-size: 1.2em;
+    }
+
+    .keyword {
+        font-size: 0.8em;
+        padding: 3px 8px;
+    }
+
+    .article-link {
+        font-size: 0.9em;
+    }
+}

@@ -177,3 +177,45 @@ h1 {
     cursor: pointer;
     margin-top: 50px;
 }
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    img[src*="logo(black).png"] {
+        max-width: 150px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 0;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .sub-title{
+        font-size: 1.2em;
+        margin-bottom: 20px;
+    }
+
+    .custom-keyword {
+        flex-basis: 100%;
+        font-size: 1em;
+        width: 70%;
+        padding: 5px 10px;
+
+    }
+
+    .custom-keyword button{
+        width: 30%;
+    }
+
+    .onboarding-done-button{
+        width: 80%;
+    }
+}
