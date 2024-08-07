@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, current_app
 
 from leadliner import db
 #from leadliner.forms import SignUpForm
@@ -11,6 +11,7 @@ bp = Blueprint('onboarding', __name__, url_prefix='/onboarding')
 @bp.route('/keywords-select')
 def keywords_select():
     user_id = session.get('user_id')
+    current_app.logger.info(f'{user_id}, view, {url_for('onboarding.keywords_select')}')
     if not user_id:
         return redirect(url_for('auth.signup'))  # Redirect to signup if no user_id in session
     
@@ -36,6 +37,7 @@ def submit_keywords():
 @bp.route('/welcome')
 def welcome():
     user_id = session.get('user_id')
+    current_app.logger.info(f'{user_id}, view, {url_for('onboarding.welcome')}')
     if not user_id:
         return redirect(url_for('auth.signup'))
     return render_template('welcome.html')

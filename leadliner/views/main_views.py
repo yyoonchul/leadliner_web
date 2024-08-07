@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import Blueprint, render_template, session, redirect, url_for, jsonify
+from flask import Blueprint, render_template, session, redirect, url_for, jsonify, current_app
 from leadliner.MakeUserNews import MakeUserNews
 import pandas as pd
 import io
@@ -13,6 +13,7 @@ bp = Blueprint('main', __name__, url_prefix='/')
 @bp.route('/')
 def home():
     user_id = session.get('user_id')
+    current_app.logger.info(f'{user_id}, view, {url_for('main.home')}')
     if not user_id:
         return redirect(url_for('auth.login'))  # Redirect to signup if no user_id in session
     user = User.query.get(user_id)
