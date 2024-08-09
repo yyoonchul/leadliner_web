@@ -121,13 +121,13 @@ h1{
 .news-article h2 {
     font-size: 18px;
     margin-top: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .news-article p {
     line-height: 1.6;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 .article-link{
