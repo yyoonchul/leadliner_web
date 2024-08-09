@@ -16,6 +16,7 @@ bp = Blueprint('mypage', __name__, url_prefix='/mypage')
 @bp.route('/account', methods=('GET', 'POST'))
 def my_account():
     user_id = session.get('user_id')
+    current_app.logger.info(f'user{user_id}, mypage/account')
     #current_app.logger.info(f'{user_id}, view, {url_for('mypage.my_account')}')
     if not user_id:
         return redirect(url_for('main.home'))  # Redirect to signup if no user_id in session
@@ -78,6 +79,7 @@ def withdraw():
 @bp.route('/keyword')
 def my_keyword():
     user_id = session.get('user_id')
+    current_app.logger.info(f'user{user_id}, mypage/keyword')
     #current_app.logger.info(f'{user_id}, view, {url_for('mypage.my_keyword')}')
     if not user_id:
         return redirect(url_for('main.home'))  # Redirect to signup if no user_id in session
