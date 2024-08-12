@@ -100,13 +100,13 @@ body {
 h1{
     text-align: center;
     font-size: 30px;
-    border-bottom: 1px solid #BABABA;
+    border-bottom: 1px solid #E6E8EC;
     margin-bottom: 0px;
     padding-bottom: 20px;
 }
 
 .news-article {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 0.5px solid #E6E8EC;
     padding: 10px;
     border-radius: 5px;
 }
