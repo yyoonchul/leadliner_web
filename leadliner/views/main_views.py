@@ -34,7 +34,7 @@ def home():
     
     # 헤더 기준으로 리스트 생성
     news_data = df.to_dict(orient="records")
-    return render_template('home.html', nickname=user.username, news_data=news_data)
+    return render_template('home.html', nickname=user.username, news_data=news_data, keyword_list=keyword_list)
 
 @bp.route('/logout')
 def logout():

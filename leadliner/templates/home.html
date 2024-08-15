@@ -22,16 +22,33 @@
     </header>
 
     <div class="container">
-        <h1>{{nickname}}님의 뉴스 페이지</h1>
-        {% for news in news_data %}
-        <div class="news-article">
-            <span class="keyword">{{news.키워드}}</span>
-            <h2>{{news.제목}}</h2>
-            <p>{{news.본문}}</p>
-            <a class="article-link" href="{{news.링크}}">(기사 원문 보기)</a>
+        <div class="news-area">
+            <h1>{{nickname}}님의 뉴스 페이지</h1>
+            {% for news in news_data %}
+            <div class="news-article">
+                <span class="keyword">{{news.키워드}}</span>
+                <h2>{{news.제목}}</h2>
+                <p>{{news.본문}}</p>
+                <a class="article-link" href="{{news.링크}}">(기사 원문 보기)</a>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+        <aside class="sidebar">
+            <h2>키워드</h2>
+            <ul id="keyword-list">
+                {% for keyword in keyword_list %}
+                    <li class="keyword-item" data-keyword="{{keyword}}">{{keyword}}</li>
+                {% endfor %}
+            </ul>
+            <p class="contact-info">
+                <small>
+                    문의사항: yclabs131@gmail.com
+                </small>
+            </p>
+        </aside>
     </div>
+
+
     <script>
          function toggleDropdown() {
             document.getElementById("myDropdown").classList.toggle("show");
@@ -50,13 +67,64 @@
             }
         }   
 
+
+        //사이드 바
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+    const container = document.querySelector('.container');
+    const keywordItems = document.querySelectorAll('.keyword-item');
+    const newsArticles = document.querySelectorAll('.news-article');
+
+    // 스크롤 이벤트 리스너
+    window.addEventListener('scroll', function() {
+        highlightKeyword();
+    });
+
+    // 키워드 클릭 이벤트 리스너
+    keywordItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const keyword = this.textContent.trim();
+            const targetArticle = Array.from(newsArticles).find(article => 
+                article.querySelector('.keyword').textContent.trim() === keyword
+            );
+            if (targetArticle) {
+                const offset = targetArticle.offsetTop - 100; // 상단에서 100px 떨어진 위치로 스크롤
+                window.scrollTo({
+                    top: offset,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // 현재 보이는 뉴스에 해당하는 키워드 강조
+    function highlightKeyword() {
+        let currentArticle = null;
+        newsArticles.forEach(article => {
+            const rect = article.getBoundingClientRect();
+            if (rect.top <= 100 && rect.bottom >= 100) {
+                currentArticle = article;
+            }
+        });
+
+        if (currentArticle) {
+            const keyword = currentArticle.querySelector('.keyword').textContent.trim();
+            keywordItems.forEach(item => {
+                if (item.textContent.trim() === keyword) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    // 초기 키워드 강조
+    highlightKeyword();
+});
+
+// jQuery의 :contains 선택자와 유사한 기능을 위한 사용자 정의 선택자
+
     </script>
 </body>
-<footer>
-    <p class="contact-info">
-        <small>
-            문의사항: yclabs131@gmail.com
-        </small>
-    </p>
-</footer>
 </html>
