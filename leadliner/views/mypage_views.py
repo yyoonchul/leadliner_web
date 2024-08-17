@@ -9,15 +9,11 @@ from leadliner.models import UserKeywordData, PreSetKeywordData
 
 bp = Blueprint('mypage', __name__, url_prefix='/mypage')
 
-#편집 전 비밀번호 재확인 
-
-#계정정보 편집 페이지
 
 @bp.route('/account', methods=('GET', 'POST'))
 def my_account():
     user_id = session.get('user_id')
-    current_app.logger.info(f'user{user_id}, mypage/account')
-    #current_app.logger.info(f'{user_id}, view, {url_for('mypage.my_account')}')
+
     if not user_id:
         return redirect(url_for('main.home'))  # Redirect to signup if no user_id in session
     user = User.query.get(user_id)
@@ -25,6 +21,8 @@ def my_account():
         session.pop('user_id', None)
         return redirect(url_for('main.home'))
     
+    #계정 정보 페이지 뷰 로깅
+    current_app.logger.info(f'user{user_id}, mypage/account, view')
     form = AccountInfoForm()
     
     if request.method == 'POST' and form.validate_on_submit():
@@ -46,7 +44,10 @@ def my_account():
 
 @bp.route('/logout')
 def logout():
+    user_id = session.get('user_id')
     session.clear()
+    #계정 정보 페이지 로그아웃 로깅
+    current_app.logger.info(f'user{user_id}, mypage/account, logout')
     return redirect(url_for('main.home'))
 
 @bp.route('/withdraw', methods=['POST'])
@@ -66,6 +67,7 @@ def withdraw():
 
         # 세션 클리어
         session.clear()
+        current_app.logger.info(f'user{user_id}, mypage/account, withdraw')
         return jsonify(success=True, redirect_url=url_for('auth.signup'))
     
     except Exception as e:
@@ -79,14 +81,17 @@ def withdraw():
 @bp.route('/keyword')
 def my_keyword():
     user_id = session.get('user_id')
-    current_app.logger.info(f'user{user_id}, mypage/keyword')
-    #current_app.logger.info(f'{user_id}, view, {url_for('mypage.my_keyword')}')
+
     if not user_id:
         return redirect(url_for('main.home'))  # Redirect to signup if no user_id in session
     user = User.query.get(user_id)
     if not user:
         session.pop('user_id', None)
         return redirect(url_for('main.home'))
+    
+    #키워드 편집 페이지 로깅
+    current_app.logger.info(f'user{user_id}, mypage/keyword')
+    
     user_keyword_data = UserKeywordData.query.filter_by(uid=user_id).first()
     keyword_list = user_keyword_data.keyword_list.split(', ')
     pre_set_keyword_data = PreSetKeywordData.query.get(1).keyword_list.split(', ')
