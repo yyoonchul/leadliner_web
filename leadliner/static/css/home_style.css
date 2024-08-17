@@ -205,7 +205,8 @@ h1{
 
     .container {
         display: flex;
-        flex-direction: column;
+        width: 100%;
+        padding: 0;
     }
 
     .dropdown {
@@ -234,5 +235,18 @@ h1{
 
     .article-link {
         font-size: 0.9em;
+    }
+
+    .sidebar h2 {
+        display: none; /* '키워드' 제목 숨김 */
+    }
+
+    #keyword-list{
+        font-size: 10px;
+    }
+
+    .contact-info{
+        display: none;
+        height: 0;
     }
 }
