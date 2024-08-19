@@ -10,7 +10,6 @@ class User(db.Model):
 class UserKeywordData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     uid = db.Column(db.Integer)
-    user = db.relationship('User', backref=db.backref('user_keywords'))
     keyword_list = db.Column(db.Text(), nullable=False)
 
 class PreSetKeywordData(db.Model):
