@@ -1,4 +1,4 @@
-from flask import Blueprint, url_for, render_template, flash, request, session
+from flask import Blueprint, url_for, render_template, flash, request, session, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 import datetime
@@ -13,6 +13,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/signup', methods=('GET', 'POST'))
 def signup():
+    current_app.logger.info('non-member, auth/signup, view')
     form = SignUpForm()
     if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -37,6 +38,7 @@ def signup_policy():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
+    current_app.logger.info('non-member, auth/login, view')
     form = UserLoginForm()
     if request.method == 'POST' and form.validate_on_submit():
         error = None

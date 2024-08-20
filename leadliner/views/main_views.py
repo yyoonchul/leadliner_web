@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import Blueprint, render_template, session, redirect, url_for, jsonify, current_app
+from flask import Blueprint, render_template, session, redirect, url_for, jsonify, current_app, request
 from leadliner.MakeUserNews import MakeUserNews
 import pandas as pd
 import io
@@ -15,7 +15,6 @@ def home():
     user_id = session.get('user_id')
 
     if not user_id:
-        current_app.logger.info('non-member, main/home, view')
         return redirect(url_for('auth.login'))  # Redirect to signup if no user_id in session
     user = User.query.get(user_id)
     if not user:
@@ -38,6 +37,17 @@ def home():
     df = pd.read_csv(io.StringIO(news_list))
     news_data = df.to_dict(orient="records")
     return render_template('home.html', nickname=user.username, news_data=news_data, keyword_list=keyword_list)
+
+@bp.route('/log_click', methods=['POST'])
+def log_click():
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "User not logged in"}), 401
+
+    # 로그 기록
+    current_app.logger.info(f'user{user_id}, main/home, link_click')
+
+    return jsonify({"status": "success"}), 200
 
 @bp.route('/logout')
 def logout():
