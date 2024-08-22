@@ -46,6 +46,16 @@
                 <input type="text" id="custom-keyword-input" placeholder="직접 입력하기">
                 <button type="button" class="icon add-button" onclick="addCustomKeyword()">+</button>
             </div>
+
+            {% if not mailing_list %}
+            <div>
+                <p>선택하신 키워드의 뉴스를 정리한 맞춤형 뉴스레터를 받아보고 싶으시다면 <br>이메일 수신에 동의해주세요. </p>
+                <div class="mailing-checkbox">
+                    <label for="agreement-checkbox">이메일 수신에 동의합니다(선택)</label>
+                    <input type="checkbox" id="agreement-checkbox">
+                </div>
+            </div>
+            {% endif %}
             <button type="button" class="save-keyword-button" onclick="saveKeywords()">키워드 저장하기</button>
 
     </main>
@@ -84,13 +94,20 @@
             })
             .filter(keyword => keyword !== '');
         
+            let isAgreementChecked = document.getElementById('agreement-checkbox')?.checked;
+    
+            // If isAgreementChecked is null or undefined, set it to false
+            if (isAgreementChecked == null) {
+                isAgreementChecked = false;
+            }
+        
         fetch('/mypage/save-keywords', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': '{{ csrf_token() }}'  // Add CSRF token
             },
-            body: JSON.stringify({ keywords: selectedKeywords }),
+            body: JSON.stringify({ keywords: selectedKeywords, agreement: isAgreementChecked }),
         })
         .then(response => response.json())
         .then(data => {
@@ -113,7 +130,6 @@
             }
         });
 
-//비밀번호 확인 팝업
     </script>
 </body>
 </html>

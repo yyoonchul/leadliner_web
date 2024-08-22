@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, PasswordField, EmailField
+from wtforms import StringField, TextAreaField, PasswordField, EmailField, BooleanField
 from wtforms.validators import DataRequired, Length, EqualTo, Email, Regexp
 
 class SignUpForm(FlaskForm):
@@ -18,3 +18,4 @@ class UserLoginForm(FlaskForm):
 class AccountInfoForm(FlaskForm):
     username = StringField('사용자이름', validators=[DataRequired(message="닉네임은 필수 입력 항목입니다.")])
     email = EmailField('이메일', validators=[DataRequired(), Email(message="유효한 이메일 주소를 입력해야 합니다.")])
+    mailing_list = BooleanField('메일 수신 동의 여부')

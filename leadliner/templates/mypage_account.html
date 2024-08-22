@@ -31,10 +31,27 @@
                     <label for="email">이메일</label>
                     <input type="email" name="email" id="email" placeholder="{{email}}" required value="{{ form.email.data or '' }}">
                 </div>
+                <div class="input-group">
+                    <label for="agreement-checkbox">메일 수신
+                        <button type="button" class="info-button" id="infoButton">?</button>
+                    </label>
+                    <label class="switch">
+                        <input type="checkbox" id="agreement-toggle" name="mailing_list" value="{{form.mailing_list.data}}" {% if mailing_list %} checked {% endif %}>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
                 <button type="submit">저장</button>
             </form>
-
+            <div id="infoModal" class="modal">
+                <div class="mailing-modal-content">
+                    <span class="close">&times;</span>
+                    <div class="modal-text">
+                        <p>메일 수신에 동의하시면 구독하시는 주제들의 뉴스만을 정리한 맞춤형 뉴스레터를 받아볼 수 있습니다. 메일 수신 동의는 필수 사항이 아닙니다.</p>
+                    </div>
+                </div>
+            </div>
         </section>
+
         
         <div class="logout-section">
             <a href="{{url_for('mypage.logout')}}" class="logout">로그아웃</a>
@@ -45,7 +62,7 @@
         </div>
 
         <div id="withdrawModal" class="modal">
-            <div class="modal-content">
+            <div class="withdraw-modal-content">
                 <span class="close">&times;</span>
                 <div class="withdraw-description">
                     <h2>정말로 탈퇴하시겠어요?</h2>
@@ -67,31 +84,48 @@
 
     </main>
     <script>
-        //탈퇴 팝업
+
+        //팝업
         document.addEventListener('DOMContentLoaded', function() {
-            var modal = document.getElementById("withdrawModal");
-            var btn = document.getElementById("withdrawBtn");
-            var span = document.getElementsByClassName("close")[0];
+            var withdrawModal = document.getElementById("withdrawModal");
+            var withdrawBtn = document.getElementById("withdrawBtn");
+            var withdrawSpan = document.getElementsByClassName("close")[1];
             var cancelBtn = document.getElementById("cancelWithdraw");
             var finwtdrwBtn = document.getElementById("finalWithdraw");
-    
-            btn.onclick = function() {
-                modal.style.display = "block";
+            var infoModal = document.getElementById("infoModal");
+            var infoBtn = document.getElementById("infoButton");
+            var infoSpan = document.getElementsByClassName("close")[0];
+
+            // 플로팅 버튼을 클릭하면 모달 창을 표시합니다.
+            infoBtn.onclick = function() {
+                infoModal.style.display = "block";
+            }
+
+            // 모달 창의 'X' 버튼을 클릭하면 모달을 닫습니다.
+            infoSpan.onclick = function() {
+                infoModal.style.display = "none";
             }
     
-            span.onclick = function() {
-                modal.style.display = "none";
+            withdrawBtn.onclick = function() {
+                withdrawModal.style.display = "block";
+            }
+    
+            withdrawSpan.onclick = function() {
+                withdrawModal.style.display = "none";
             }
     
             cancelBtn.onclick = function() {
-                modal.style.display = "none";
+                withdrawModal.style.display = "none";
             }
     
             window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
+        if (event.target == withdrawModal) {
+            withdrawModal.style.display = "none";
+        }
+        if (event.target == infoModal) {
+            infoModal.style.display = "none";
+        }
+    }
         });
 
         function withdraw() {

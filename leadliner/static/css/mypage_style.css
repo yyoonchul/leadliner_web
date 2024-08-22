@@ -137,6 +137,7 @@ label {
     text-align: left;
 }
 
+
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -170,6 +171,115 @@ button {
     border-radius: 3px;
     cursor: pointer;
     margin: 7.5px 0px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-right: 10px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+/* 플로팅 버튼 스타일 */
+#infoButton {
+    width: 20px;
+    height: 20px;
+    background-color: #d8d6d6;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.info-button:hover {
+    background-color: #777;
+}
+/* 모달 창 스타일 */
+
+.mailing-modal-content{
+    background-color: var(--main_white);
+    margin: 15% auto;
+    padding: 10px;
+    border: 1px solid #888;
+    width: 40%;
+    height: 10%;
+    max-width: 500px;
+}
+
+.modal-text{
+    width: 80%;
+    height: 50%;
+    margin: 20px auto;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .logout-section{
@@ -217,7 +327,7 @@ button {
     font-family: 'NanumSquare', sans-serif;
 }
 
-.modal-content {
+.withdraw-modal-content {
     background-color: var(--main_white);
     margin: 15% auto;
     padding: 10px;
@@ -370,6 +480,21 @@ body {
     border: none; /* 입력 필드 테두리 제거 */
     padding: 0; /* 입력 필드 패딩 제거 */
     margin-right: 0px; /* 입력 필드와 아이콘 사이 간격 */
+}
+
+.mailing-checkbox{
+    display: flex;
+    align-items: center; /* 세로 정렬을 중앙으로 맞춥니다. */
+    justify-content: center; /* 가로 정렬을 중앙으로 맞춥니다. */
+    width: 100%;
+}
+
+.mailing-checkbox label {
+    width: 180px;
+    height: 100%;
+    white-space: nowrap; /* 텍스트가 한 줄에 들어오도록 설정 */
+    font-size: 14px; /* 필요에 따라 글자 크기를 조정하세요 */
+    margin: 0 5px;
 }
 
 .add-button {

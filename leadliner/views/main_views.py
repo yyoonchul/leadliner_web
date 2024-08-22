@@ -4,8 +4,7 @@ from leadliner.MakeUserNews import MakeUserNews
 import pandas as pd
 import io
 
-from leadliner.models import User
-from leadliner.models import UserKeywordData
+from leadliner.models import UserData, KeywordData
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
@@ -16,7 +15,7 @@ def home():
 
     if not user_id:
         return redirect(url_for('auth.login'))  # Redirect to signup if no user_id in session
-    user = User.query.get(user_id)
+    user = UserData.query.get(user_id)
     if not user:
         session.pop('user_id', None)
         return redirect(url_for('auth.signup'))
@@ -24,10 +23,10 @@ def home():
     #홈화면 뷰 로깅
     current_app.logger.info(f'user{user_id}, main/home, view')
 
-    user_keyword_data = UserKeywordData.query.filter_by(uid=user_id).first()
+    user_keyword_data = user.keyword_list
     if not user_keyword_data:
        return render_template("home.html", nickname=user.username)
-    keyword_list = user_keyword_data.keyword_list.split(', ')
+    keyword_list = user_keyword_data.split(', ')
     make_user_news = MakeUserNews()
     news_list = make_user_news.make_merged_news(keyword_list)
 

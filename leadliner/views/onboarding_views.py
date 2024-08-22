@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, jsonify, redirect, url_fo
 
 from leadliner import db
 #from leadliner.forms import SignUpForm
-from leadliner.models import UserKeywordData, PreSetKeywordData, User
+from leadliner.models import KeywordData, UserData
 
 
 bp = Blueprint('onboarding', __name__, url_prefix='/onboarding')
@@ -15,25 +15,32 @@ def keywords_select():
     if not user_id:
         return redirect(url_for('auth.signup'))  # Redirect to signup if no user_id in session
     
-    user = User.query.get(user_id)
+    user = UserData.query.get(user_id)
     if not user:
         return redirect(url_for('auth.signup')) 
     
     #온보딩 키워드 선택 뷰 로깅
     current_app.logger.info(f'user{user_id}, onboarding/keyword-select, view')
 
-    pre_set_keyword_data = PreSetKeywordData.query.get(1).keyword_list.split(', ')
-    return render_template('keywords_select.html', keywords=pre_set_keyword_data, user_id=user_id)
+    keywords = [keyword.keyword for keyword in KeywordData.query.all()]
+
+
+    return render_template('keywords_select.html', keywords=keywords, user_id=user_id)
 
 @bp.route('/submit-keywords', methods=['POST'])
 def submit_keywords():
     user_id = session.get('user_id')
     if not user_id:
         return jsonify(success=False, message="User not authenticated"), 401
-    keywords = request.json.get('keywords', [])
+    
+    data = request.get_json()
+    keywords = data.get('keywords', [])
+    agreement = data.get('agreement', False)
+    
+    user = UserData.query.get(user_id)
 
-    user_keyword_data = UserKeywordData(uid=user_id, keyword_list=', '.join(keywords))
-    db.session.add(user_keyword_data)
+    user.keyword_list = ', '.join(keywords)
+    user.mailing_list = agreement
     db.session.commit()
     
     #온보딩 키워드 제출 로깅

@@ -29,8 +29,14 @@
             <input type="text" id="custom-keyword-input" placeholder="직접 입력하기">
             <button type="button" class="icon add-button" onclick="addCustomKeyword()">+</button>
         </div>
+        <p>선택하신 키워드의 뉴스를 정리한 맞춤형 뉴스레터를 받아보고 싶으시다면 이메일 수신에 동의해주세요. </p>
+        <div class="input-group">
+            <input type="checkbox" id="agreement-checkbox">
+            <label for="agreement-checkbox">이메일 수신에 동의합니다(선택)</label>
+        </div>
         <button type="button" class="create-button" onclick="submitKeywords()">나만의 뉴스 만들기</button>
         <p class="create-button-comment">키워드 리스트는 나중에 수정할 수 있어요</p>
+
     </div>
     <script>
         function toggleKeyword(button) {
@@ -69,13 +75,15 @@
                 })
                 .filter(keyword => keyword !== ''); // Remove any empty strings
             
+            const isAgreementChecked = document.getElementById('agreement-checkbox').checked;
+            
             fetch('/onboarding/submit-keywords', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({ keywords: selectedKeywords }),
+                body: JSON.stringify({ keywords: selectedKeywords, agreement: isAgreementChecked}),
             })
             .then(response => response.json())
             .then(data => {

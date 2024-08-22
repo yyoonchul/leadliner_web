@@ -39,8 +39,8 @@
                     <label for="confirm-password">비밀번호 확인</label>
                     <input type="password" name="password2" id="confirm-password" placeholder="비밀번호를 다시 한번 적어주세요" required value="{{ form.password2.data or '' }}">
                 </div>
-                    <p class="terms">아래 버튼을 눌러 계정을 만드시면 <br> <a href="{{url_for('auth.signup_policy')}}">개인정보 규정</a>을 포함한 약관에 동의하시는 것으로 간주됩니다.
-                    </p>
+                <p class="terms">아래 버튼을 눌러 계정을 만드시면 <br> <a href="{{url_for('auth.signup_policy')}}">개인정보 규정</a>을 포함한 약관에 동의하시는 것으로 간주됩니다.
+                </p>
                 <button type="submit">계정 만들기</button>
                 <p class="login-link">이미 계정이 있으신가요? <a href="{{url_for('auth.login')}}">로그인 하기</a></p>
                 </form>
