@@ -26,8 +26,16 @@ def home():
     user_keyword_data = user.keyword_list
     if not user_keyword_data:
        return render_template("home.html", nickname=user.username)
-    keyword_list = user_keyword_data.split(', ')
+    code_list = user_keyword_data.split(', ')
     make_user_news = MakeUserNews()
+    keyword_list = []
+    for code in code_list:
+        stock = KeywordData.query.filter_by(stock_code=code).first()
+        if stock.ko_name:
+            keyword_list.append(stock.ko_name)
+        else:
+            keyword_list.append(stock.en_name)
+            
     news_list = make_user_news.make_merged_news(keyword_list)
 
     if "error" in news_list:

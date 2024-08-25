@@ -4,7 +4,7 @@ from functools import wraps
 
 from leadliner import db
 from leadliner.forms import AccountInfoForm
-from leadliner.models import UserData, KeywordData
+from leadliner.models import UserData, KeywordData, TopKeywordData
 
 bp = Blueprint('mypage', __name__, url_prefix='/mypage')
 
@@ -97,9 +97,17 @@ def my_keyword():
     current_app.logger.info(f'user{user_id}, mypage/keyword')
     
     user_keyword_data = user.keyword_list
-    keyword_list = user_keyword_data.split(', ')
+    user_keyword_list = user_keyword_data.split(', ')
+    keyword_list = []
+    for keyword in user_keyword_list:
+        stock = KeywordData.query.filter_by(stock_code=keyword).first()
+        if stock.ko_name:
+            keyword_list.append(stock.ko_name)
+        else:
+            keyword_list.append(stock.en_name)
 
-    pre_set_keyword_data = [keyword.keyword for keyword in KeywordData.query.all()]
+
+    pre_set_keyword_data = [keyword.ko_name for keyword in TopKeywordData.query.all()]
     pre_set_keyword_data = [x for x in pre_set_keyword_data if x not in keyword_list]
 
     mailing_list = user.mailing_list
@@ -114,10 +122,21 @@ def submit_keywords():
     data = request.get_json()
     keywords = data.get('keywords', [])
     agreement = data.get('agreement', False)
-    keyword_list=', '.join(keywords)
 
     user = UserData.query.get(user_id)
-    user.keyword_list = keyword_list
+    codes = []
+    for keyword in keywords:
+        stock = KeywordData.query.filter_by(ko_name=keyword).first()
+        if stock:
+            codes.append(stock.stock_code)
+        else:
+            stock = KeywordData.query.filter_by(en_name=keyword).first()
+            if stock:
+                codes.append(stock.stock_code)
+            else:
+                continue
+
+    user.keyword_list = ', '.join(codes)
     if agreement:
         user.mailing_list = agreement
 

@@ -2,8 +2,7 @@ from flask import Blueprint
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, current_app
 
 from leadliner import db
-#from leadliner.forms import SignUpForm
-from leadliner.models import KeywordData, UserData
+from leadliner.models import KeywordData, UserData, TopKeywordData
 
 
 bp = Blueprint('onboarding', __name__, url_prefix='/onboarding')
@@ -22,7 +21,7 @@ def keywords_select():
     #온보딩 키워드 선택 뷰 로깅
     current_app.logger.info(f'user{user_id}, onboarding/keyword-select, view')
 
-    keywords = [keyword.keyword for keyword in KeywordData.query.all()]
+    keywords = [keyword.ko_name for keyword in TopKeywordData.query.all()]
 
 
     return render_template('keywords_select.html', keywords=keywords, user_id=user_id)
@@ -37,9 +36,13 @@ def submit_keywords():
     keywords = data.get('keywords', [])
     agreement = data.get('agreement', False)
     
+    codes = []
     user = UserData.query.get(user_id)
+    for keyword in keywords:
+        stock = KeywordData.query.filter_by(ko_name=keyword).first()
+        codes.append(stock.stock_code)
 
-    user.keyword_list = ', '.join(keywords)
+    user.keyword_list = ', '.join(codes)
     user.mailing_list = agreement
     db.session.commit()
     
