@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import Blueprint, render_template, session, redirect, url_for, jsonify, current_app, request
 from leadliner.MakeUserNews import MakeUserNews
+from leadliner.GetStockPrice import GetStockPrice
 import pandas as pd
 import io
 
@@ -27,22 +28,65 @@ def home():
     if not user_keyword_data:
        return render_template("home.html", nickname=user.username)
     code_list = user_keyword_data.split(', ')
-    make_user_news = MakeUserNews()
+    
+    stock_list = []
     keyword_list = []
     for code in code_list:
         stock = KeywordData.query.filter_by(stock_code=code).first()
+        stock_list.append(stock)
         if stock.ko_name:
             keyword_list.append(stock.ko_name)
         else:
             keyword_list.append(stock.en_name)
+
+    make_user_news = MakeUserNews()
+    get_stock_price = GetStockPrice()
+
+    news_data = []
+
+    for stock in stock_list:
+        data = {
+            'name': 'name', 
+            'price': 0.00,
+            'rate': 0.00}
+
+        if stock.korea_stock:
+            data['name'] = stock.ko_name
+            naver_url = "https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query=" + stock.ko_name
+            data['naver_news_link'] = naver_url
+            news = make_user_news.get_naver_news(stock.ko_name, 5) #스트링임
+            news = pd.read_csv(io.StringIO(news))
+            news = news.to_dict(orient="records")
+            data['naver_news'] = news
+            price, rate= get_stock_price.korea_stock_price(stock.stock_code)
+            data['price'] = price+'원'
+            data['rate'] = format(float(rate),".2f")
+        else:
+            if stock.ko_name:
+                data['name'] = stock.ko_name
+                base_url = "https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query="
+                url = base_url + stock.ko_name
+                data['naver_news_link'] = url
+                news = make_user_news.get_naver_news(stock.ko_name, 5) #스트링임
+                news = pd.read_csv(io.StringIO(news))
+                news = news.to_dict(orient="records")
+                data['naver_news'] = news
+
+            else:
+                data['name'] = stock.en_name
             
-    news_list = make_user_news.make_merged_news(keyword_list)
+            reuters_url = "https://www.reuters.com/site-search/?query=" + stock.en_name
+            data['reuters_news_link'] = reuters_url
+            cnbc_url = "https://www.cnbc.com/search/?query=" + stock.en_name
+            data['cnbc_news_link'] = cnbc_url
+            yahoo_url = f"https://finance.yahoo.com/quote/{stock.stock_code}/news/"
+            data['yahoo_news_link'] = yahoo_url
+            price, rate= get_stock_price.usa_stock_price(stock.stock_code)
+            data['price'] = str(format(float(price),".2f"))+'달러'
+            data['rate'] = format(float(rate),".2f")
+    
+        news_data.append(data)
 
-    if "error" in news_list:
-        return render_template("home.html", nickname=user.username)
-
-    df = pd.read_csv(io.StringIO(news_list))
-    news_data = df.to_dict(orient="records")
     return render_template('home.html', nickname=user.username, news_data=news_data, keyword_list=keyword_list)
 
 @bp.route('/log_click', methods=['POST'])

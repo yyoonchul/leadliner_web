@@ -9,7 +9,7 @@ class MakeUserNews:
         self.client_id = client_id
         self.client_secret = client_secret
 
-    def get_naver_news(self, keyword):
+    def get_naver_news(self, keyword, lines: int):
         
         #네이버 뉴스에서 키워드를 검색하고 요약 정보를 추출하여 CSV 형식을 문자열로 반환
         
@@ -22,7 +22,7 @@ class MakeUserNews:
             "query": keyword,
             "sort": "sim",
             "start": 1,
-            "display": 10,
+            "display": lines,
         }
 
         response = requests.get(url, headers=headers, params=params)
@@ -54,7 +54,7 @@ class MakeUserNews:
         all_data = []
 
         for keyword in keywords:
-            csv_data = self.get_naver_news(keyword)
+            csv_data = self.get_naver_news(keyword, 10)
             if csv_data.startswith("Error"):
                 return "Error"
 

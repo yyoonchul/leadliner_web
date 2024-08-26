@@ -115,29 +115,10 @@ h1{
     padding-bottom: 20px;
 }
 
-.news-article {
+.stock-news{
     border-bottom: 0.5px solid #E6E8EC;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.keyword {
-    display: inline-block;
-    background-color: #eee;
-    padding: 5px 10px;
-    border-radius: 15px;
-}
-
-.news-article h2 {
-    font-size: 18px;
-    margin-top: 15px;
-    margin-bottom: 5px;
-}
-
-.news-article p {
-    line-height: 1.6;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .article-link{
@@ -149,6 +130,122 @@ h1{
     cursor: pointer;
 }
 
+.stock-item {
+    display: flex;
+    justify-content: left;
+    gap: 5px;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.stock-name{
+    display: inline-block;
+    background-color: #eee;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+.stock-price-info{
+    display: inline-block;
+    background-color: #eee;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+.stock-change.positive {
+    color: var(--main_red);
+}
+
+.stock-change.negative {
+    color: #3943B7 ;
+}
+
+.korea-news h2{
+    margin: 10px 0 0 0;
+}
+
+.news-article {
+    border-bottom: 0.5px solid #E6E8EC;
+    margin: 0 40px 0 10px;
+    padding: 0 0 10px 0;
+}
+
+.news-article h3 {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.news-article p {
+    line-height: 1.2;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.article-link {
+    text-decoration: none;
+    background-color: var(--main_white);
+    color: var(--main_black);
+    font-weight: 100;
+    font-size: 15px;
+    border-bottom: 1px solid var(--main_red);
+    cursor: pointer;
+}
+
+.more-news{
+    display: flex;
+    justify-content: right;
+}
+
+.more-news a{
+    text-decoration: none;
+    display: block;
+    background-color: var(--main_white);
+    color: var(--main_black);
+    border-bottom: none;
+    width: 85px;
+    margin: 15px 10px 0 0;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.usa-news h2{
+    margin: 5px 0;
+}
+
+.news-sources {
+    display: flex;
+    justify-content: left;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.news-source-btn {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--main_black);
+    border-radius: 10px;
+}
+
+.news-source-btn.reuters{
+    background-color: #f7f2ece5;
+    /* border: 1px solid #fd9e32e5; */
+}
+
+.news-source-btn.cnbc{
+    background-color: #f1f2fde5;
+    /* border: 1px solid #2338f3e5; */
+}
+
+.news-source-btn.yahoo{
+    background-color: #f9f3ffea;
+    /* border: 1px solid #9543ffe5; */
+}
 
 /* 사이드바 스타일 */
 .sidebar {

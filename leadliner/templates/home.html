@@ -26,15 +26,58 @@
     <div class="container">
         <div class="news-area">
             <h1>{{nickname}}님의 뉴스 페이지</h1>
+
             {% for news in news_data %}
-            <div class="news-article">
-                <span class="keyword">{{news.키워드}}</span>
-                <h2>{{news.제목}}</h2>
-                <p>{{news.본문}}</p>
-                <a class="article-link" href="{{news.링크}}">(기사 원문 보기)</a>
+            <div class="stock-news">
+                <section class="stock-info">
+                    <div class="stock-item">
+                        <span class="stock-name">{{news['name']}}</span>
+                        <span class="stock-price-info">
+                            <span class="stock-price">{{news['price']}}</span>
+                            {% if news['rate'][0]=='+' %}
+                            <span class="stock-change positive">{{news['rate']}}%</span>
+                            {% endif %}
+                            {% if news['rate'][0]=='-' %}
+                            <span class="stock-change negative">{{news['rate']}}%</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                </section>
+
+                {% if news['naver_news_link'] %}
+                <section class="korea-news">
+                    <h2>국내 뉴스</h2>
+
+                    {% for article in news['naver_news'] %}
+                    <article class="news-article">
+                        <h3>{{article.제목}}</h3>
+                        <p>{{article.본문}}</p>
+                        <a class="article-link" href="{{article.링크}}">(기사 원문 보기)</a>
+                    </article>
+                    {% endfor %}
+
+                    <div class="more-news">
+                        <a href="{{news['naver_news_link']}}">뉴스 더보기 ></a>
+                    </div>
+                </section>
+                {% endif %}
+
+                {% if news['reuters_news_link'] %}
+                <section class="usa-news">
+                    <h2>외신 뉴스</h2>
+                    <div class="news-sources">
+                        <a href="{{news['reuters_news_link']}}" class="news-source-btn reuters">Reuters</a>
+                        <a href="{{news['cnbc_news_link']}}" class="news-source-btn cnbc">CNBC</a>
+                        <a href="{{news['yahoo_news_link']}}" class="news-source-btn yahoo">Yahoo Finance</a>
+                        <!-- 더 많은 외신 소스 추가 -->
+                    </div>
+                </section>
+                {% endif %}
+
             </div>
             {% endfor %}
         </div>
+
         <aside class="sidebar">
             <h2>키워드</h2>
             <ul id="keyword-list">
@@ -75,7 +118,7 @@
             const sidebar = document.querySelector('.sidebar');
     const container = document.querySelector('.container');
     const keywordItems = document.querySelectorAll('.keyword-item');
-    const newsArticles = document.querySelectorAll('.news-article');
+    const newsArticles = document.querySelectorAll('.stock-news');
 
     // 스크롤 이벤트 리스너
     window.addEventListener('scroll', function() {
@@ -87,10 +130,10 @@
         item.addEventListener('click', function() {
             const keyword = this.textContent.trim();
             const targetArticle = Array.from(newsArticles).find(article => 
-                article.querySelector('.keyword').textContent.trim() === keyword
+                article.querySelector('.stock-name').textContent.trim() === keyword
             );
             if (targetArticle) {
-                const offset = targetArticle.offsetTop - 100; // 상단에서 100px 떨어진 위치로 스크롤
+                const offset = targetArticle.offsetTop - 30; // 상단에서 100px 떨어진 위치로 스크롤
                 window.scrollTo({
                     top: offset,
                     behavior: 'smooth'
@@ -110,7 +153,7 @@
         });
 
         if (currentArticle) {
-            const keyword = currentArticle.querySelector('.keyword').textContent.trim();
+            const keyword = currentArticle.querySelector('.stock-name').textContent.trim();
             keywordItems.forEach(item => {
                 if (item.textContent.trim() === keyword) {
                     item.classList.add('active');

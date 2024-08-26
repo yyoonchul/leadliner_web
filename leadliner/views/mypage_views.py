@@ -94,7 +94,7 @@ def my_keyword():
         return redirect(url_for('main.home'))
     
     #키워드 편집 페이지 로깅
-    current_app.logger.info(f'user{user_id}, mypage/keyword')
+    current_app.logger.info(f'user{user_id}, mypage/keyword, view')
     
     user_keyword_data = user.keyword_list
     user_keyword_list = user_keyword_data.split(', ')
