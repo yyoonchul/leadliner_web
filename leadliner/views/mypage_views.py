@@ -97,14 +97,15 @@ def my_keyword():
     current_app.logger.info(f'user{user_id}, mypage/keyword, view')
     
     user_keyword_data = user.keyword_list
-    user_keyword_list = user_keyword_data.split(', ')
     keyword_list = []
-    for keyword in user_keyword_list:
-        stock = KeywordData.query.filter_by(stock_code=keyword).first()
-        if stock.ko_name:
-            keyword_list.append(stock.ko_name)
-        else:
-            keyword_list.append(stock.en_name)
+    if user_keyword_data:
+        user_keyword_list = user_keyword_data.split(', ')
+        for keyword in user_keyword_list:
+            stock = KeywordData.query.filter_by(stock_code=keyword).first()
+            if stock.ko_name:
+                keyword_list.append(stock.ko_name)
+            else:
+                keyword_list.append(stock.en_name)
 
 
     pre_set_keyword_data = [keyword.ko_name for keyword in TopKeywordData.query.all()]
