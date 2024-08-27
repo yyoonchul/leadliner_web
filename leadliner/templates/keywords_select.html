@@ -13,8 +13,8 @@
         <div class="divider"></div>
     </header>
     <div class="container">
-        <h1>뉴스를 보고 싶은 키워드를 골라 주세요</h1>
-        <p class="keyword-description">리드라이너 유저들이 가장 많이 찾아보는 키워드들이에요</p>
+        <h1>뉴스를 보고 싶은 주식 종목을 골라 주세요</h1>
+        <p class="keyword-description">리드라이너 유저들이 가장 많이 찾아보는 종목들이에요</p>
         <div class="keyword-list">
             {% for keyword in top_keywords %}
             <button type="button" class="keyword" onclick="toggleKeyword(this)">
@@ -39,7 +39,7 @@
             <label for="agreement-checkbox">이메일 수신에 동의합니다(선택)</label>
         </div>
         <button type="button" class="create-button" onclick="submitKeywords()">나만의 뉴스 만들기</button>
-        <p class="create-button-comment">키워드 리스트는 나중에 수정할 수 있어요</p>
+        <p class="create-button-comment">종목 리스트는 나중에 수정할 수 있어요</p>
 
     </div>
 

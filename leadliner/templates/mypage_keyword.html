@@ -19,7 +19,7 @@
             <a href="{{url_for('mypage.my_account')}}" class="secure-link">계정</a>
         </nav>
         <div class="selected-container">
-            <p class="keyword-description">현재 구독 중인 키워드들이에요</p>
+            <p class="keyword-description">현재 구독 중인 종목들이에요</p>
             <div class="keyword-list">
                 {% for keyword in user_keywords %}
                 <button type="button" class="keyword selected" onclick="toggleKeyword(this)">
@@ -31,7 +31,7 @@
         </div>
 
         <div class="suggested-container">
-            <p class="keyword-description">다른 유저들이 가장 많이 찾아보는 키워드들이에요</p>
+            <p class="keyword-description">다른 유저들이 가장 많이 찾아보는 종목들이에요</p>
             <div class="keyword-list">
                 {% for keyword in top_keywords %}
                 <button type="button" class="keyword" onclick="toggleKeyword(this)">
