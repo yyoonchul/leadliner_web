@@ -1,0 +1,14 @@
+my_app: "PSU07elW2xMjIiQrgoZYg320dd8vy9bBXzHW"
+my_sec: "PvqtOe7r+cV0gHbZH8O1lOw7S9pXv5R9KOGIbJEHhmwNjJ094+AGuj/9O5s5Lkhe8D7slh5fhuhPjh5DQb3HrtUrV9diNnjV07L6CeuhMZEm+pKeVNP6U44Jj+KB4a5xmjbcnuNWR9+OvoX+hgKv0i1EUGLnBD72/4eSHfk5LAItm2//j8M="
+
+#계좌번호 앞 8자리
+my_acct: "64473526"
+my_acct_stock: "64473526"
+#계좌번호 뒤 2자리
+my_prod: "01"
+
+#실전투자
+prod: "https://openapi.koreainvestment.com:9443"
+
+my_agent : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+
