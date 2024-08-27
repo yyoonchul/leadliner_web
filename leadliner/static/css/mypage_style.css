@@ -471,6 +471,7 @@ body {
     border-radius: 20px;
     background-color: var(--main_white);
     margin: 0 auto;/* 아래 여백 추가 */
+    z-index: 1001;
 }
 
 .custom-keyword input[type="text"] {
@@ -480,6 +481,39 @@ body {
     border: none; /* 입력 필드 테두리 제거 */
     padding: 0; /* 입력 필드 패딩 제거 */
     margin-right: 0px; /* 입력 필드와 아이콘 사이 간격 */
+}
+
+/* 종목 검색 칸 */
+.keyword-suggestions-container {
+    position: relative;
+    z-index: 1000;
+    width: 60%;
+}
+
+#keyword-suggestions{
+    list-style-type: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 0;
+    margin: 0;
+}
+
+#keyword-suggestions li{
+    padding: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#keyword-suggestions li:hover {
+    background-color: #f1f1f1;
 }
 
 .mailing-checkbox{

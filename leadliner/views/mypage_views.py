@@ -110,9 +110,13 @@ def my_keyword():
     pre_set_keyword_data = [keyword.ko_name for keyword in TopKeywordData.query.all()]
     pre_set_keyword_data = [x for x in pre_set_keyword_data if x not in keyword_list]
 
+    ko_keywords = [keyword.ko_name for keyword in KeywordData.query.filter_by(korea_stock=True).all()]
+    en_keywords = [keyword.en_name for keyword in KeywordData.query.filter_by(korea_stock=False).all()]
+    all_keywords = ko_keywords + en_keywords
+
     mailing_list = user.mailing_list
 
-    return render_template('mypage_keyword.html', keywords=keyword_list, preset_keywords=pre_set_keyword_data, mailing_list = mailing_list)
+    return render_template('mypage_keyword.html', user_keywords=keyword_list, top_keywords=pre_set_keyword_data, all_keywords=all_keywords ,mailing_list = mailing_list)
 
 @bp.route('/save-keywords', methods=['POST'])
 def submit_keywords():

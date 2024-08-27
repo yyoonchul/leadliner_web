@@ -290,6 +290,11 @@ h1{
     padding: 10px 0 0 15px;
 }
 
+.investor-info{
+    font-size: 12px;
+    padding: 10px 0 0 15px;
+}
+
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -345,5 +350,8 @@ h1{
     .contact-info{
         display: none;
         height: 0;
+    }
+    .sidebar.investor-info{
+        display: none;
     }
 }

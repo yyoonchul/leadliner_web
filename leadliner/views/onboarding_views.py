@@ -21,10 +21,14 @@ def keywords_select():
     #온보딩 키워드 선택 뷰 로깅
     current_app.logger.info(f'user{user_id}, onboarding/keyword-select, view')
 
-    keywords = [keyword.ko_name for keyword in TopKeywordData.query.all()]
+    top_keywords = [keyword.ko_name for keyword in TopKeywordData.query.all()]
+    
+    ko_keywords = [keyword.ko_name for keyword in KeywordData.query.filter_by(korea_stock=True).all()]
+    en_keywords = [keyword.en_name for keyword in KeywordData.query.filter_by(korea_stock=False).all()]
+    all_keywords = ko_keywords + en_keywords
 
 
-    return render_template('keywords_select.html', keywords=keywords, user_id=user_id)
+    return render_template('keywords_select.html', top_keywords=top_keywords, all_keywords=all_keywords ,user_id=user_id)
 
 @bp.route('/submit-keywords', methods=['POST'])
 def submit_keywords():
@@ -37,11 +41,16 @@ def submit_keywords():
     agreement = data.get('agreement', False)
     
     codes = []
-    user = UserData.query.get(user_id)
+
     for keyword in keywords:
         stock = KeywordData.query.filter_by(ko_name=keyword).first()
-        codes.append(stock.stock_code)
+        if stock:
+            codes.append(stock.stock_code)
+        else:
+            stock = KeywordData.query.filter_by(en_name=keyword).first()
+            codes.append(stock.stock_code)
 
+    user = UserData.query.get(user_id)
     user.keyword_list = ', '.join(codes)
     user.mailing_list = agreement
     db.session.commit()
