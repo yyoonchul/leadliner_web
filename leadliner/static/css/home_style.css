@@ -284,10 +284,15 @@ h1{
     background-color: #f5f5f5;
 }
 
+.sidebar a{
+    text-decoration: none;
+    color: var(--main_black);
+}
 
 .contact-info{
-    font-size: 12px;
+    font-size: 14px;
     padding: 10px 0 0 15px;
+    font-weight: bold;
 }
 
 .investor-info{
