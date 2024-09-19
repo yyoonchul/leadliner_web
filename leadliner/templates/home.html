@@ -1,15 +1,35 @@
 <html lang="ko">
 <head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5Z4CN57J');</script>
+    <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keyword" content="맞춤 뉴스, 개인화 뉴스, 뉴스 추천, 뉴스 큐레이션, 주식 뉴스, 경제 뉴스, 테크 뉴스">
     <meta name="description" content="내 보유 주식 뉴스만 모아보고 싶다면? 관심 있는 키워드만 선택하면 관련 뉴스만 쏙쏙! 시간 낭비 없는 개인화 맞춤 뉴스 서비스, 리드라이너에서 시작하세요.">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4CJFS0TXDQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4CJFS0TXDQ');
+</script>
     <title>리드라이너 - 나만을 위한 뉴스</title>
     <link rel="stylesheet" href="../static/css/home_style.css">
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5Z4CN57J"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <header>
         <img src="../static/assets/logo(black).png" alt="Leadliner 로고">
         <div class="divider"></div>
@@ -85,14 +105,16 @@
                 {% endfor %}
             </ul>
 
-            <p class="contact-info">
-                <small>
-                    문의사항: yclabs131@gmail.com
-                </small>
-            </p>
+            <a href="https://forms.gle/TiDdZ9MbpBaC7tQ79">
+                <p class="contact-info">
+                    <small>
+                        문의하기
+                    </small>
+                </p>
+            </a>
             <p class="investor-info">
                 <small>
-                    화면에 표시된 시세는 실제 시세와 시간 차이가 있을 수 있습니다. 
+                    *화면에 표시된 시세는 실제 시세와 시간 차이가 있을 수 있습니다. 
                 </small>
             </p>
         </aside>

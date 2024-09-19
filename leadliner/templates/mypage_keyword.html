@@ -1,13 +1,33 @@
 <html lang="ko">
 <head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5Z4CN57J');</script>
+    <!-- End Google Tag Manager -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4CJFS0TXDQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4CJFS0TXDQ');
+</script>
     <title>   
 리드라이너 - 키워드수정</title>
     <link rel="stylesheet" href="../static/css/mypage_style.css">
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5Z4CN57J"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <header>
         <a href="{{url_for('main.home')}}"><img src="../static/assets/logo(black).png" alt="Leadliner 로고"></a>
         <div class="divider"></div>
@@ -19,7 +39,7 @@
             <a href="{{url_for('mypage.my_account')}}" class="secure-link">계정</a>
         </nav>
         <div class="selected-container">
-            <p class="keyword-description">현재 구독 중인 키워드들이에요</p>
+            <p class="keyword-description">현재 구독 중인 종목들이에요</p>
             <div class="keyword-list">
                 {% for keyword in user_keywords %}
                 <button type="button" class="keyword selected" onclick="toggleKeyword(this)">
@@ -31,7 +51,7 @@
         </div>
 
         <div class="suggested-container">
-            <p class="keyword-description">다른 유저들이 가장 많이 찾아보는 키워드들이에요</p>
+            <p class="keyword-description">다른 유저들이 가장 많이 찾아보는 종목들이에요</p>
             <div class="keyword-list">
                 {% for keyword in top_keywords %}
                 <button type="button" class="keyword" onclick="toggleKeyword(this)">
