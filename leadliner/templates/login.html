@@ -2,24 +2,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> 리드라이너-로그인</title>
+    <title>리드라이너 - 로그인</title>
+    <link rel="stylesheet" href="../static/css/landing_style.css">
     <link rel="stylesheet" href="../static/css/auth_style.css">
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
     <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <div class="image-section">
-            <img src="../static/assets/welcome_page_image.jpg" alt="이미지">
-            <div class="overlay">
-                <div class="logo-container">
-                    <img src="../static/assets/logo(white).png" alt="로고">
-                    <p>나만을 위한 뉴스</p>
-                </div>
-            </div>
-        </div>
-        <div class="form-section">
-            <h1>로그인 하기</h1>
+        <header>
+            <img src="../static/assets/logo(black).png" alt="리드라이너 로고" class="logo">
+        </header>
+        <main>
+            <h1>나만의 AI 주식 비서</h1>
+            <p>매일 내 주식 뉴스만 모아서 요약해주는 <br> AI 주식 비서의 브리핑을 받아보세요.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-signup">회원가입</a>
+                <a href="#" class="btn btn-login" id="showLoginPopup">로그인</a>
+            </div
+        </main>
+    </div>
+
+    <div class="popup-overlay">
+        <div class="popup-content">
+            <button class="close-btn" id="closePopup">&times;</button>
+            <h2>로그인</h2>
             <form method="post">
                 {{ form.csrf_token }}
                 {% include "form_errors.html" %}
@@ -32,9 +39,14 @@
                     <input type="password" name="password" id="password" placeholder="비밀번호를 입력해 주세요" required value="{{ form.password.data or '' }}">
                 </div>
                 <button type="submit">로그인</button>
-                <p class="signup-link">리드라이너가 처음이신가요? <a href="{{url_for('auth.signup')}}">가입하기</a></p>
-                </form>
+            </form>
         </div>
     </div>
+    <script>
+        document.getElementById('closePopup').addEventListener('click', function() {
+            document.getElementById('loginPopup').style.display = 'none';
+            window.location.href = "{{ url_for('auth.landing') }}";
+        });
+    </script>
 </body>
 </html>

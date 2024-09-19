@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리드라이너 - 나만의 주식 뉴스 브리핑</title>
+    <link rel="stylesheet" href="../static/css/landing_style.css">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="../static/assets/logo(black).png" alt="리드라이너 로고" class="logo">
+        </header>
+        <main>
+            <h1>나만의 AI 주식 비서</h1>
+            <p>매일 내 주식 뉴스만 모아서 요약해주는 <br> AI 주식 비서의 브리핑을 받아보세요.</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('auth.signup') }}" class="btn btn-signup">회원가입</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-login">로그인</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
