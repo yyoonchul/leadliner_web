@@ -9,9 +9,11 @@
     <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
 </head>
 <body>
+    <div class="background-slideshow"></div>
+    <div class="background-overlay"></div>
     <div class="container">
         <header>
-            <img src="../static/assets/logo(black).png" alt="리드라이너 로고" class="logo">
+            <img src="../static/assets/logo(white).png" alt="리드라이너 로고" class="logo">
         </header>
         <main>
             <h1>나만의 AI 주식 비서</h1>
@@ -22,5 +24,27 @@
             </div>
         </main>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const backgroundElement = document.querySelector('.background-slideshow');
+            const images = [
+                "../static/assets/landing_page_image.jpg",
+                "../static/assets/landing_page_image_2.jpg",
+                "../static/assets/landing_page_image_3.jpg"
+            ];
+            let currentIndex = 0;
+
+            function changeBackground() {
+                backgroundElement.style.backgroundImage = `url('${images[currentIndex]}')`;
+                currentIndex = (currentIndex + 1) % images.length;
+            }
+
+            // 초기 배경 설정
+            changeBackground();
+
+            // 10초마다 배경 변경
+            setInterval(changeBackground, 10000);
+        });
+    </script>
 </body>
 </html>

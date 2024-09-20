@@ -33,38 +33,24 @@
             <img src="../static/assets/logo(black).png" alt="리드라이너 로고" class="logo">
         </header>
         <main>
-            <h1>나만의 AI 주식 비서</h1>
-            <p>매일 내 주식 뉴스만 모아서 요약해주는 <br> AI 주식 비서의 브리핑을 받아보세요.</p>
-            <div class="cta-buttons">
-                <a href="#" class="btn btn-signup">회원가입</a>
-                <a href="#" class="btn btn-login" id="showLoginPopup">로그인</a>
-            </div
+            <div class="login-form">
+                <h2>로그인</h2>
+                <form method="post">
+                    {{ form.csrf_token }}
+                    {% include "form_errors.html" %}
+                    <div class="input-group">
+                        <label for="email">이메일</label>
+                        <input type="email" name="email" id="email" placeholder="이메일 주소를 입력해 주세요" required value="{{ form.email.data or '' }}">
+                    </div>
+                    <div class="input-group">
+                        <label for="password">비밀번호</label>
+                        <input type="password" name="password" id="password" placeholder="비밀번호를 입력해 주세요" required value="{{ form.password.data or '' }}">
+                    </div>
+                    <button type="submit">로그인</button>
+                </form>
+                <p class="signup-link">계정이 없으신가요? <a href="{{ url_for('auth.signup') }}">회원가입</a></p>
+            </div>
         </main>
     </div>
-
-    <div class="popup-overlay">
-        <div class="popup-content">
-            <button class="close-btn" id="closePopup">&times;</button>
-            <h2>로그인</h2>
-            <form method="post">
-                {{ form.csrf_token }}
-                {% include "form_errors.html" %}
-                <div class="input-group">
-                    <label for="email">이메일</label>
-                    <input type="email" name="email" id="email" placeholder="이메일 주소를 입력해 주세요" required value="{{ form.email.data or '' }}">
-                </div>
-                <div class="input-group">
-                    <label for="password">비밀번호</label>
-                    <input type="password" name="password" id="password" placeholder="비밀번호를 입력해 주세요" required value="{{ form.password.data or '' }}">
-                </div>
-                <button type="submit">로그인</button>
-            </form>
-        </div>
-    </div>
-    <script>
-        document.getElementById('closePopup').addEventListener('click', function() {
-            window.location.href = "{{ url_for('auth.landing') }}";
-        });
-    </script>
 </body>
 </html>

@@ -82,6 +82,10 @@ def home():
             yahoo_url = f"https://finance.yahoo.com/quote/{stock.stock_code}/news/"
             data['yahoo_news_link'] = yahoo_url
             price, rate= get_stock_price.usa_stock_price(stock.stock_code)
+            if price == '':
+                price = 0.00
+            if rate == '':
+                rate = 0.00
             data['price'] = str(format(float(price),".2f"))+'달러'
             data['rate'] = format(float(rate),".2f")
     

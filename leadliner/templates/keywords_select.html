@@ -28,39 +28,40 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5Z4CN57J"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <header>
-        <img src="../static/assets/logo(black).png" alt="Leadliner 로고">
-        <div class="divider"></div>
-    </header>
     <div class="container">
-        <h1>뉴스를 보고 싶은 주식 종목을 골라 주세요</h1>
-        <p class="keyword-description">리드라이너 유저들이 가장 많이 찾아보는 종목들이에요</p>
-        <div class="keyword-list">
-            {% for keyword in top_keywords %}
-            <button type="button" class="keyword" onclick="toggleKeyword(this)">
-                {{ keyword }}
-                <span class="icon">+</span>
-            </button>
-            {% endfor %}
+        <header>
+            <img src="../static/assets/logo(black).png" alt="Leadliner 로고" class="logo">
+        </header>
+        <div class="keyword-selection">
+            <h1>뉴스를 보고 싶은 주식 종목을 골라 주세요</h1>
+            <p class="keyword-description">리드라이너 유저들이 가장 많이 찾아보는 종목들이에요</p>
+            <div class="keyword-list">
+                {% for keyword in top_keywords %}
+                <button type="button" class="keyword" onclick="toggleKeyword(this)">
+                    {{ keyword }}
+                    <span class="icon">+</span>
+                </button>
+                {% endfor %}
+            </div>
+    
+            <p class="keyword-description">종목명을 직접 검색해 더 많은 주식을 추가해 보세요(해외 주식은 영문으로 검색해 주세요)</p>
+            <div class="keyword custom-keyword">
+                <input type="text" id="custom-keyword-input" placeholder="주식 검색하기">
+                <button type="button" class="icon add-button" onclick="addCustomKeyword()">+</button>
+            </div>
+            <div class="keyword-suggestions-container">
+                <ul id="keyword-suggestions" style="display: none;"></ul>
+            </div>
+    
+            <p>선택하신 키워드의 뉴스를 정리한 맞춤형 뉴스레터를 받아보고 싶으시다면 이메일 수신에 동의해주세요. </p>
+            <div class="input-group">
+                <input type="checkbox" id="agreement-checkbox">
+                <label for="agreement-checkbox">이메일 수신에 동의합니다(선택)</label>
+            </div>
+            <button type="button" class="create-button" onclick="submitKeywords()">나만의 뉴스 보러가기</button>
+            <p class="create-button-comment">종목 리스트는 나중에 수정할 수 있어요</p>
+    
         </div>
-
-        <p class="keyword-description">종목명을 직접 검색해 더 많은 주식을 추가해 보세요(해외 주식은 영문으로 검색해 주세요)</p>
-        <div class="keyword custom-keyword">
-            <input type="text" id="custom-keyword-input" placeholder="주식 검색하기">
-            <button type="button" class="icon add-button" onclick="addCustomKeyword()">+</button>
-        </div>
-        <div class="keyword-suggestions-container">
-            <ul id="keyword-suggestions" style="display: none;"></ul>
-        </div>
-
-        <p>선택하신 키워드의 뉴스를 정리한 맞춤형 뉴스레터를 받아보고 싶으시다면 이메일 수신에 동의해주세요. </p>
-        <div class="input-group">
-            <input type="checkbox" id="agreement-checkbox">
-            <label for="agreement-checkbox">이메일 수신에 동의합니다(선택)</label>
-        </div>
-        <button type="button" class="create-button" onclick="submitKeywords()">나만의 뉴스 만들기</button>
-        <p class="create-button-comment">종목 리스트는 나중에 수정할 수 있어요</p>
-
     </div>
 
 <script>
@@ -100,7 +101,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.location.href = '/onboarding/welcome';
+                    window.location.href = '/';
                 } else {
                     alert('키워드 제출에 실패했습니다. 다시 시도해 주세요.');
                 }

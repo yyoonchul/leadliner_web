@@ -297,6 +297,38 @@ a{
     text-decoration: underline;
 }
 
+.login-form {
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.login-form h2 {
+    font-family: 'NanumSquareExtraBold', sans-serif;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: var(--main_black);
+}
+
+.signup-link {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.signup-link a {
+    color: var(--main_black);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
 
 @media (max-width: 768px) {
     .container {
