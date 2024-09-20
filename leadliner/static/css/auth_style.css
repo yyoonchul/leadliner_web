@@ -132,8 +132,10 @@ p {
 }
 
 .input-group {
-    margin-bottom: 40px;
-    width: 80%;
+    margin: 10px auto;
+    width: 90%;
+    text-align: left;
+    margin-bottom: 25px; /* 입력 그룹 간 간격을 20px에서 25px로 증가 */
 }
 
 label {
@@ -141,31 +143,33 @@ label {
     margin-bottom: 5px;
     font-family: 'NanumSquareBold';
     color: #425466;
-    font-size: 17px;
+    font-size: 16px;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"] {
     width: 100%;
-    height: 85%;
-    padding: 10px;
+    padding: 12px; /* 입력 필드 내부 패딩을 10px에서 12px로 증가 */
     border: 1px solid #ccc;
-    border-radius: 15px;
+    border-radius: 5px;
+    font-size: 16px;
     background-color: #EDF2F7;
+    box-sizing: border-box;
 }
 
 button[type="submit"] {
     width: 100%;
-    padding: 15px 0;
+    padding: 15px 0; /* 버튼 높이를 약간 증가 */
     background-color: var(--main_black);
     color: var(--main_white);
     border: none;
-    border-radius: 25px; /* 이 부분을 수정했습니다 */
+    border-radius: 25px;
     font-size: 16px;
     font-family: 'NanumSquareBold', sans-serif;
     cursor: pointer;
     transition: all 0.3s;
+    margin-top: 15px; /* 버튼 위 여백을 10px에서 15px로 증가 */
 }
 
 button[type="submit"]:hover {
@@ -261,12 +265,14 @@ a{
 }
 
 .signup-form {
-    max-width: 400px;
+    max-width: 450px; /* 최대 너비를 400px에서 450px로 증가 */
+    width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px; /* 내부 패딩을 20px에서 30px로 증가 */
     background-color: #f8f8f8;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
 .signup-form h2 {
@@ -274,29 +280,6 @@ a{
     font-size: 1.8em;
     margin-bottom: 20px;
     color: var(--main_black);
-}
-
-.input-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-family: 'NanumSquareBold', sans-serif;
-    color: #425466;
-    font-size: 14px;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
 }
 
 .login-link {

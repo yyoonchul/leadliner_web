@@ -15,11 +15,11 @@ def home():
     user_id = session.get('user_id')
 
     if not user_id:
-        return redirect(url_for('auth.login'))  # Redirect to signup if no user_id in session
+        return redirect(url_for('auth.landing'))  # Redirect to signup if no user_id in session
     user = UserData.query.get(user_id)
     if not user:
         session.pop('user_id', None)
-        return redirect(url_for('auth.signup'))
+        return redirect(url_for('auth.landing'))
     
     #홈화면 뷰 로깅
     current_app.logger.info(f'user{user_id}, main/home, view')

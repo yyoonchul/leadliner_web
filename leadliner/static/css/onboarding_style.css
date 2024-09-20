@@ -81,12 +81,22 @@ h1 {
     cursor: pointer;
     font-family: 'NanumSquare';
     font-size: 85%;
+    transition: all 0.3s ease;
+}
+
+.keyword:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .keyword.selected {
     background-color: var(--main_white); /* 배경색 흰색으로 변경 */
     border-color: var(--main_red);
     border-width: 1.5px; 
+}
+
+.keyword.selected:hover {
+    background-color: #fff0f0; /* 선택된 상태에서 호버 시 배경색 변경 */
 }
 
 .icon {
@@ -173,6 +183,14 @@ h1 {
     border-radius: 20px;
     cursor: pointer;
     margin-top: 50px;
+    transition: all 0.3s ease;
+}
+
+.create-button:hover {
+    background-color: var(--main_red);
+    color: var(--main_white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .create-button-comment {
@@ -205,6 +223,14 @@ h1 {
     border-radius: 20px;
     cursor: pointer;
     margin-top: 50px;
+    transition: all 0.3s ease;
+}
+
+.onboarding-done-button:hover {
+    background-color: var(--main_red);
+    color: var(--main_white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 768px) {

@@ -63,7 +63,6 @@
     </div>
     <script>
         document.getElementById('closePopup').addEventListener('click', function() {
-            document.getElementById('loginPopup').style.display = 'none';
             window.location.href = "{{ url_for('auth.landing') }}";
         });
     </script>

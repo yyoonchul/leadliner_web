@@ -162,8 +162,14 @@ input[type="password"] {
     font-weight: bold;
     font-family: 'NanumSquare';
     margin-top: 5px;
+    transition: all 0.3s ease;
 }
 
+.account-info button:hover {
+    background-color: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
 button {
     padding: 10px 20px;
@@ -441,12 +447,22 @@ body {
     font-family: 'NanumSquare';
     font-size: 85%;
     margin: 0;
+    transition: all 0.3s ease;
+}
+
+.keyword:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .keyword.selected {
     background-color: var(--main_white); /* 배경색 흰색으로 변경 */
     border-color: var(--main_red);
     border-width: 1.5px; 
+}
+
+.keyword.selected:hover {
+    background-color: #fff0f0;
 }
 
 .icon {
@@ -548,6 +564,13 @@ body {
     cursor: pointer;
     margin-top: 50px;
     font-family: 'NanumSquare';
+    transition: all 0.3s ease;
+}
+
+.save-keyword-button:hover {
+    background-color: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 768px) {

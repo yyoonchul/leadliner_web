@@ -40,20 +40,20 @@
                     {{ form.csrf_token }}
                     {% include "form_errors.html" %}
                     <div class="input-group">
-                        <label for="nickname">닉네임</label>
-                        <input type="text" name="nickname" id="nickname" placeholder="닉네임을 입력해 주세요" required value="{{ form.nickname.data or '' }}">
+                        <label for="username">닉네임</label>
+                        <input type="text" name="username" id="nickname" placeholder="닉네임을 입력해 주세요" required value="{{ form.username.data or '' }}">
                     </div>
                     <div class="input-group">
                         <label for="email">이메일</label>
                         <input type="email" name="email" id="email" placeholder="이메일 주소를 입력해 주세요" required value="{{ form.email.data or '' }}">
                     </div>
                     <div class="input-group">
-                        <label for="password">비밀번호</label>
-                        <input type="password" name="password" id="password" placeholder="비밀번호를 입력해 주세요" required value="{{ form.password.data or '' }}">
+                        <label for="password1">비밀번호</label>
+                        <input type="password" name="password1" id="password" placeholder="비밀번호를 입력해 주세요" required value="{{ form.password1.data or '' }}">
                     </div>
                     <div class="input-group">
-                        <label for="confirm_password">비밀번호 확인</label>
-                        <input type="password" name="confirm_password" id="confirm_password" placeholder="비밀번호를 다시 입력해 주세요" required value="{{ form.confirm_password.data or '' }}">
+                        <label for="password2">비밀번호 확인</label>
+                        <input type="password" name="password2" id="confirm_password" placeholder="비밀번호를 다시 입력해 주세요" required value="{{ form.password2.data or '' }}">
                     </div>
                     <p class="terms">아래 버튼을 눌러 계정을 만드시면 <br> <a href="{{url_for('auth.signup_policy')}}">개인정보 규정</a>을 포함한 약관에 동의하시는 것으로 간주됩니다.
                     </p>
