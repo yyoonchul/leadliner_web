@@ -2,7 +2,7 @@
     --main_black: #191919;
     --main_white: #fcfcfc;
     --main_red: #c1292e;
-  }
+}
 
 /*상단 바*/
 header {
@@ -16,14 +16,15 @@ header {
     background-color: var(--main_white);
 }
 
-.divider {
-    position: absolute; /* divider에 position: absolute 추가 */
-    bottom: 0; /* 하단에 고정 */
+/* 헤더 밑 디바이더 였던 것 */
+/* .divider {
+    position: absolute; 
+    bottom: 0; 
     left: 0;
-    width: 100%; /* 디바이더 너비 설정 */
-    height: 1.5px; /* 디바이더 높이 설정 */
-    background-color: #E6E8EC; /* 디바이더 색상 설정 */
-}
+    width: 100%; 
+    height: 1.5px; 
+    background-color: #E6E8EC; 
+} */
 
 img {
     max-width: 200px;/* 로고 이미지 최대 너비 */
@@ -99,7 +100,6 @@ img {
     background-color: var(--main_white);
     width: 85%;
     max-width: 800px;
-    border-right: 1px solid #E6E8EC;
 }
 
 body {
@@ -110,7 +110,6 @@ body {
 h1{
     text-align: center;
     font-size: 30px;
-    border-bottom: 1px solid #E6E8EC;
     margin-bottom: 0px;
     padding-bottom: 20px;
 }
@@ -165,59 +164,36 @@ h1{
     color: #3943B7 ;
 }
 
-.korea-news h2{
-    margin: 10px 0 0 0;
-}
-
-.news-article {
-    border-bottom: 0.5px solid #E6E8EC;
-    margin: 0 40px 0 10px;
-    padding: 0 0 10px 0;
-}
-
-.news-article h3 {
-    font-size: 18px;
+.news-summary h2{
+    margin-bottom: 0px;
     margin-top: 10px;
-    margin-bottom: 5px;
 }
 
-.news-article p {
-    line-height: 1.2;
-    margin-bottom: 5px;
-    margin-top: 5px;
+.news-summary p{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 14px;
 }
 
-.article-link {
-    text-decoration: none;
-    background-color: var(--main_white);
-    color: var(--main_black);
-    font-weight: 100;
-    font-size: 15px;
-    border-bottom: 1px solid var(--main_red);
-    cursor: pointer;
+.news-summary-item{
+    margin-top: 20px;
 }
 
-.more-news{
+.news-summary-item p {
     display: flex;
-    justify-content: right;
+    align-items: center;
+    font-size: 18px;
+    margin: 10px 0;
 }
 
-.more-news a{
-    text-decoration: none;
-    display: block;
-    background-color: var(--main_white);
-    color: var(--main_black);
-    border-bottom: none;
-    width: 85px;
-    margin: 15px 10px 0 0;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.usa-news h2{
-    margin: 5px 0;
+.news-summary-item p::before {
+    content: '•'; /* 닷(.) 표시 */
+    position: relative;
+    left: 0;
+    color: var(--main_black); /* 닷(.) 색상 */
+    font-size: 18px; /* 닷(.) 크기 */
+    line-height: 1; /* 닷(.)의 수직 정렬 */
+    margin-right: 10px;
 }
 
 .news-sources {
@@ -233,6 +209,17 @@ h1{
     font-weight: bold;
     color: var(--main_black);
     border-radius: 10px;
+    transition: background-color 0.3s, box-shadow 0.3s; 
+}
+
+.news-source-btn:hover {
+    background-color: #e0e0e0; /* 호버 시 배경색 변경 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 호버 시 그림자 효과 추가 */
+}
+
+.news-source-btn.naver{
+    background-color: #efffeee5;
+    /* border: 1px solid #fd9e32e5; */
 }
 
 .news-source-btn.reuters{
@@ -252,11 +239,18 @@ h1{
 
 /* 사이드바 스타일 */
 .sidebar {
+    margin-left: 20px;
     position: sticky;
     top: 20px;
     height: 100%;
     overflow-y: auto;
     width: 15%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 뉴스 영역과 동일한 그림자 효과 추가 */
+    transition: box-shadow 0.3s ease-in-out; /* 그림자 효과를 위한 트랜지션 추가 */
+}
+
+.sidebar:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 효과 강화 */
 }
 
 .sidebar h2 {
@@ -275,11 +269,11 @@ h1{
     padding: 7.5px 0 7.5px 15px;
     margin-bottom: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s; /* 호버 효과를 위한 트랜지션 추가 */
 }
 
 .keyword-item:hover {
-    background-color: #f5f5f5;
+    background-color: #e0e0e0; /* 키워드 항목 호버 시 배경색 변경 */
 }
 
 .keyword-item.active {

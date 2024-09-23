@@ -53,11 +53,11 @@ def home():
         if stock.korea_stock:
             data['name'] = stock.ko_name
             naver_url = "https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query=" + stock.ko_name
-            data['naver_news_link'] = naver_url
-            news = make_user_news.get_naver_news(stock.ko_name, 5) #스트링임
-            news = pd.read_csv(io.StringIO(news))
-            news = news.to_dict(orient="records")
-            data['naver_news'] = news
+            # data['naver_news_link'] = naver_url
+            # news = make_user_news.get_naver_news(stock.ko_name, 5) #스트링임
+            # news = pd.read_csv(io.StringIO(news))
+            # news = news.to_dict(orient="records")
+            # data['naver_news'] = news
             price, rate= get_stock_price.korea_stock_price(stock.stock_code)
             data['price'] = price+'원'
             data['rate'] = format(float(rate),".2f")
@@ -67,10 +67,10 @@ def home():
                 base_url = "https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query="
                 url = base_url + stock.ko_name
                 data['naver_news_link'] = url
-                news = make_user_news.get_naver_news(stock.ko_name, 5) #스트링임
-                news = pd.read_csv(io.StringIO(news))
-                news = news.to_dict(orient="records")
-                data['naver_news'] = news
+                # news = make_user_news.get_naver_news(stock.ko_name, 5) #스트링임
+                # news = pd.read_csv(io.StringIO(news))
+                # news = news.to_dict(orient="records")
+                # data['naver_news'] = news
 
             else:
                 data['name'] = stock.en_name

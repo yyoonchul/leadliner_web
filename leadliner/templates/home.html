@@ -32,7 +32,6 @@
     <!-- End Google Tag Manager (noscript) -->
     <header>
         <img src="../static/assets/logo(black).png" alt="Leadliner 로고">
-        <div class="divider"></div>
         <div class="dropdown">
             <button class="mypage-button" onclick="toggleDropdown()">mypage</button>
             <div id="myDropdown" class="dropdown-content">
@@ -45,7 +44,7 @@
 
     <div class="container">
         <div class="news-area">
-            <h1>{{nickname}}님의 뉴스 페이지</h1>
+            <h1>{{nickname}}님의 주식 뉴스 페이지</h1>
 
             {% for news in news_data %}
             <div class="stock-news">
@@ -62,36 +61,29 @@
                         </span>
                     </div>
                 </section>
-
-                {% if news['naver_news_link'] %}
-                <section class="korea-news">
-                    <h2>국내 뉴스</h2>
-
-                    {% for article in news['naver_news'] %}
-                    <article class="news-article">
-                        <h3>{{article.제목}}</h3>
-                        <p>{{article.본문}}</p>
-                        <a class="article-link" href="{{article.링크}}">(기사 원문 보기)</a>
-                    </article>
-                    {% endfor %}
-
-                    <div class="more-news">
-                        <a href="{{news['naver_news_link']}}">뉴스 더보기 ></a>
+                <section class="news-summary">
+                    <h2>뉴스 요약</h2>
+                    <p>AI가 요약한 오늘의 <b>{{news['name']}}</b> 뉴스입니다.</p>
+                    <div class="news-summary-item">
+                        <p>첫 번째 뉴스 요약 문장입니다.</p>
+                        <p>두 번째 뉴스 요약 문장입니다.</p>
+                        <p>세 번째 뉴스 요약 문장입니다.</p>
                     </div>
                 </section>
-                {% endif %}
-
-                {% if news['reuters_news_link'] %}
-                <section class="usa-news">
-                    <h2>외신 뉴스</h2>
+                <section class="news-links">
+                    <h4>뉴스 직접 보기</h4>
                     <div class="news-sources">
+                        {% if news['naver_news_link'] %}
+                        <a href="{{news['naver_news_link']}}" class="news-source-btn naver">네이버 뉴스</a>
+                        {% endif %}
+                        {% if news['reuters_news_link'] %}
                         <a href="{{news['reuters_news_link']}}" class="news-source-btn reuters">Reuters</a>
                         <a href="{{news['cnbc_news_link']}}" class="news-source-btn cnbc">CNBC</a>
                         <a href="{{news['yahoo_news_link']}}" class="news-source-btn yahoo">Yahoo Finance</a>
-                        <!-- 더 많은 외신 소스 추가 -->
+                        {% endif %}
                     </div>
+
                 </section>
-                {% endif %}
 
             </div>
             {% endfor %}
