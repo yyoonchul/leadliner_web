@@ -7,23 +7,53 @@
     <link rel="stylesheet" href="../static/css/landing_style.css">
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
     <link href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div class="background-slideshow"></div>
-    <div class="background-overlay"></div>
-    <div class="container">
-        <header>
-            <img src="../static/assets/logo(white).png" alt="리드라이너 로고" class="logo">
-        </header>
-        <main>
-            <h1>나만의 AI 주식 비서</h1>
-            <p>매일 내 주식 뉴스만 모아서 요약해주는 <br> AI 주식 비서의 브리핑을 받아보세요.</p>
-            <div class="cta-buttons">
-                <a href="{{ url_for('auth.signup') }}" class="btn btn-signup">회원가입</a>
-                <a href="{{ url_for('auth.login') }}" class="btn btn-login">로그인</a>
-            </div>
-        </main>
+    <div class="logo-container">
+        <img src="../static/assets/logo(white).png" alt="리드라이너 로고" class="logo" id="floating-logo">
     </div>
+    <div class="landing-section">
+        <div class="background-slideshow"></div>
+        <div class="background-overlay"></div>
+        <div class="container">
+            <main>
+                <section class="hero">
+                    <h1>나만의 AI 주식 비서</h1>
+                    <p>매일 내 주식 뉴스만 모아서 요약해주는 <br> AI 주식 비서의 브리핑을 받아보세요.</p>
+                    <div class="cta-buttons">
+                        <a href="{{ url_for('auth.signup') }}" class="btn btn-signup">회원가입</a>
+                        <a href="{{ url_for('auth.login') }}" class="btn btn-login">로그인</a>
+                    </div>
+                </section>
+            </main>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+    <section class="description">
+        <div class="description-content">
+            <img src="../static/assets/logo(black).png" alt="리드라이너 로고" class="logo description-logo" id="description-logo">
+            <div class="character-section character-w">
+                <img src="../static/assets/character_w.jpg" alt="여성 캐릭터" class="character-img">
+                <div class="character-text">
+                    <p>리드라이너는 AI 기술을 활용하여 개인화된 주식 뉴스 요약 서비스를 제공합니다.</p>
+                    <p>매일 여러분이 관심 있는 주식 종목의 최신 뉴스를 분석하고 요약하여 제공합니다.</p>
+                </div>
+            </div>
+            <div class="character-section character-m">
+                <div class="character-text">
+                    <p>여러 곳에 흩어져 있는 뉴스를 한 번에 볼 수 있어요!</p>
+                    <p>리드라이너와 함께 효율적인 주식 투자를 시작해보세요!</p>
+                </div>
+                <img src="../static/assets/character_m.jpg" alt="남성 캐릭터" class="character-img">
+            </div>
+            <div class="cta-container">
+                <a href="{{ url_for('auth.signup') }}" class="btn btn-signup">지금 시작하기</a>
+            </div>
+        </div>
+    </section>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const backgroundElement = document.querySelector('.background-slideshow');
@@ -45,6 +75,31 @@
             // 10초마다 배경 변경
             setInterval(changeBackground, 10000);
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    const floatingLogo = document.getElementById('floating-logo');
+    const descriptionLogo = document.getElementById('description-logo');
+    const descriptionSection = document.querySelector('.description');
+
+    window.addEventListener('scroll', function() {
+        const descriptionTop = descriptionSection.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (descriptionTop <= windowHeight / 2) {
+            floatingLogo.style.opacity = '0';
+            descriptionLogo.style.display = 'inline-block';
+        } else {
+            floatingLogo.style.opacity = '1';
+            descriptionLogo.style.display = 'none';
+        }
+
+        if (descriptionTop <= 0) {
+            floatingLogo.style.display = 'none';
+        } else {
+            floatingLogo.style.display = 'inline-block';
+        }
+    });
+});
     </script>
 </body>
 </html>
