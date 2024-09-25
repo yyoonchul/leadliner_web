@@ -6,3 +6,4 @@ logs
 config/production.py
 leadliner/kis_dev/kis_devlp.yaml
 leadliner/kis_dev/dump
+.env

@@ -2,14 +2,25 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 import io
+from dotenv import load_dotenv
+import os
+import openai
 
+load_dotenv()
+
+client_id = os.getenv("NAVER_CLIENT_ID")
+client_secret = os.getenv("NAVER_CLIENT_SECRET")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 class MakeUserNews:
-    def __init__(self, client_id="qt27ngYl4fLAuIO8LIr8", client_secret="C7D2679Ddq"):
+    def __init__(self, client_id=client_id, client_secret=client_secret, openai_api_key=openai_api_key):
         self.client_id = client_id
         self.client_secret = client_secret
+        self.openai_api_key = openai_api_key
+        openai.api_key = self.openai_api_key
 
-    def get_naver_news(self, keyword, lines: int):
+        
+    def get_naver_news(self, keyword, lines: int=30):
         
         #네이버 뉴스에서 키워드를 검색하고 요약 정보를 추출하여 CSV 형식을 문자열로 반환
         
@@ -33,39 +44,34 @@ class MakeUserNews:
         else:
             return f"Error: {response.status_code}, {response_data.get('errorMessage')}"
 
-        df = pd.DataFrame(news_list)[["title", "link", "description"]]
-        df.columns = ["제목", "링크", "본문"]
-        df["키워드"] = keyword
+        df = pd.DataFrame(news_list)[["title", "description"]]
+        df.columns = ["제목", "본문"]
 
         # HTML 태그 제거 및 본문 링크 추가
         df["제목"] = df["제목"].astype(str).apply(lambda x: BeautifulSoup(x, "lxml").text)
         df["본문"] = df["본문"].astype(str).apply(lambda x: BeautifulSoup(x, "lxml").text)
-        # CSV 데이터 생성 (문자열 형태)
-        csv_buffer = io.StringIO()
-        df.to_csv(csv_buffer, index=False, encoding="utf-8-sig")
-        csv_data = csv_buffer.getvalue()
 
-        return csv_data
+        result = "\n".join(df["제목"] + "\n" + df["본문"])
 
-    def make_merged_news(self, keywords):
-        
-        #여러 키워드에 대한 뉴스 검색 결과를 하나의 CSV 형식 문자열로 반환
+        return result
+    
+    def summarize_news(self, text:str):
+        # OpenAI ChatGPT API를 사용하여 텍스트 요약
+        client = openai.OpenAI()
 
-        all_data = []
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a news summarizer specialized in stock news briefings. Summarize the news headlines into three main topics. Each summary should be a single sentence."},
+                {"role": "user", "content": f"오늘의 뉴스 헤드라인을 모아놓은 다음 텍스트를 읽고 3개의 주요 뉴스를 요약해줘. 각각의 요약은 한 문장으로 적어줘. 번호 없이 문장만을 적어주고 각 문장을 줄바꿈으로 구분해줘.:\n\n{text}"},
+                ]
+        )
 
-        for keyword in keywords:
-            csv_data = self.get_naver_news(keyword, 10)
-            if csv_data.startswith("Error"):
-                return "Error"
+        summary = response.choices[0].message.content
+        summary_list = summary.strip().split('\n')
+        return summary_list
 
-            df = pd.read_csv(io.StringIO(csv_data))
-            all_data.append(df)
-
-        if all_data:
-            merged_df = pd.concat(all_data, ignore_index=True)
-            csv_buffer = io.StringIO()
-            merged_df.to_csv(csv_buffer, index=False, encoding="utf-8-sig")
-            csv_data = csv_buffer.getvalue()
-            return csv_data
-        else:
-            return "Error"
+    def make_user_news(self, keyword:str):
+        news = self.get_naver_news(keyword, 30)
+        summary = self.summarize_news(news)
+        return summary

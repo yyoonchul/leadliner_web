@@ -4,10 +4,79 @@ from leadliner.MakeUserNews import MakeUserNews
 from leadliner.GetStockPrice import GetStockPrice
 import pandas as pd
 import io
+from leadliner import db
+from datetime import datetime, timedelta
 
-from leadliner.models import UserData, KeywordData
+from leadliner.models import UserData, KeywordData, KeywordNewsData
 
 bp = Blueprint('main', __name__, url_prefix='/')
+
+def get_stock_info(stock, get_stock_price):
+    data = {
+        'name': 'name', 
+        'price': 0.00,
+        'rate': 0.00
+    }
+
+    if stock.korea_stock:
+        data['name'] = stock.ko_name
+        naver_url = f"https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query={stock.ko_name}"
+        data['naver_news_link'] = naver_url
+        price, rate = get_stock_price.korea_stock_price(stock.stock_code)
+        data['price'] = f"{price}원"
+        data['rate'] = format(float(rate), ".2f")
+    else:
+        if stock.ko_name:
+            data['name'] = stock.ko_name
+            data['naver_news_link'] = f"https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query={stock.ko_name}"
+        else:
+            data['name'] = stock.en_name
+        
+        data['reuters_news_link'] = f"https://www.reuters.com/site-search/?query={stock.en_name}"
+        data['cnbc_news_link'] = f"https://www.cnbc.com/search/?query={stock.en_name}"
+        data['yahoo_news_link'] = f"https://finance.yahoo.com/quote/{stock.stock_code}/news/"
+        price, rate = get_stock_price.usa_stock_price(stock.stock_code)
+        data['price'] = f"{format(float(price or 0), '.2f')}달러"
+        data['rate'] = format(float(rate or 0), ".2f")
+
+    return data
+
+def get_news_data(keyword):
+    # 현재 시간
+    current_time = datetime.now()
+    
+    # KeywordNewsData에서 해당 키워드의 데이터 조회
+    news_data = KeywordNewsData.query.filter_by(keyword=keyword).first()
+    
+    if news_data is None:
+        # 데이터가 없는 경우, 새로운 데이터 생성
+        make_user_news = MakeUserNews()
+        news = make_user_news.make_user_news(keyword)
+        new_data = KeywordNewsData(
+            keyword=keyword,
+            last_update=current_time,
+            news1 = news[0],
+            news2 = news[1],
+            news3 = news[2]
+        )
+        db.session.add(new_data)
+        db.session.commit()
+        return news 
+    
+    elif current_time - news_data.last_update > timedelta(hours=1):
+        make_user_news = MakeUserNews()
+        news = make_user_news.make_user_news(keyword)
+        news_data.news1 = news[0]
+        news_data.news2 = news[1]
+        news_data.news3 = news[2]
+        news_data.last_update = current_time
+        db.session.commit()
+        return news 
+    
+    else:
+        
+        news = [news_data.news1, news_data.news2, news_data.news3]
+        return news
 
 
 @bp.route('/')
@@ -27,10 +96,12 @@ def home():
     user_keyword_data = user.keyword_list
     if not user_keyword_data:
        return render_template("home.html", nickname=user.username)
+    
     code_list = user_keyword_data.split(', ')
     
-    stock_list = []
-    keyword_list = []
+    stock_list = [] #주식 객체
+    keyword_list = [] #주식 이름
+
     for code in code_list:
         stock = KeywordData.query.filter_by(stock_code=code).first()
         stock_list.append(stock)
@@ -39,59 +110,20 @@ def home():
         else:
             keyword_list.append(stock.en_name)
 
-    make_user_news = MakeUserNews()
     get_stock_price = GetStockPrice()
+    news_data = [get_stock_info(stock, get_stock_price) for stock in stock_list]
 
-    news_data = []
-
-    for stock in stock_list:
-        data = {
-            'name': 'name', 
-            'price': 0.00,
-            'rate': 0.00}
-
-        if stock.korea_stock:
-            data['name'] = stock.ko_name
-            naver_url = "https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query=" + stock.ko_name
-            # data['naver_news_link'] = naver_url
-            # news = make_user_news.get_naver_news(stock.ko_name, 5) #스트링임
-            # news = pd.read_csv(io.StringIO(news))
-            # news = news.to_dict(orient="records")
-            # data['naver_news'] = news
-            price, rate= get_stock_price.korea_stock_price(stock.stock_code)
-            data['price'] = price+'원'
-            data['rate'] = format(float(rate),".2f")
-        else:
-            if stock.ko_name:
-                data['name'] = stock.ko_name
-                base_url = "https://search.naver.com/search.naver?where=news&ie=utf8&sm=nws_hty&query="
-                url = base_url + stock.ko_name
-                data['naver_news_link'] = url
-                # news = make_user_news.get_naver_news(stock.ko_name, 5) #스트링임
-                # news = pd.read_csv(io.StringIO(news))
-                # news = news.to_dict(orient="records")
-                # data['naver_news'] = news
-
-            else:
-                data['name'] = stock.en_name
-            
-            reuters_url = "https://www.reuters.com/site-search/?query=" + stock.en_name
-            data['reuters_news_link'] = reuters_url
-            cnbc_url = "https://www.cnbc.com/search/?query=" + stock.en_name
-            data['cnbc_news_link'] = cnbc_url
-            yahoo_url = f"https://finance.yahoo.com/quote/{stock.stock_code}/news/"
-            data['yahoo_news_link'] = yahoo_url
-            price, rate= get_stock_price.usa_stock_price(stock.stock_code)
-            if price == '':
-                price = 0.00
-            if rate == '':
-                rate = 0.00
-            data['price'] = str(format(float(price),".2f"))+'달러'
-            data['rate'] = format(float(rate),".2f")
-    
-        news_data.append(data)
+    for data in news_data:
+        data['news'] = get_news_data(data['name'])
 
     return render_template('home.html', nickname=user.username, news_data=news_data, keyword_list=keyword_list)
+
+# @bp.route('/get_news_data', methods=['POST'])
+# def get_news_data_route():
+#     keyword = request.json['keyword']
+#     news = get_news_data(keyword)
+#     return jsonify(news)
+
 
 @bp.route('/log_click', methods=['POST'])
 def log_click():

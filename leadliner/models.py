@@ -23,3 +23,11 @@ class TopKeywordData(db.Model):
     en_name = db.Column(db.String(50))
     stock_code = db.Column(db.String(10), nullable=False)
     korea_stock = db.Column(db.Boolean(), nullable=False, default=False)
+
+class KeywordNewsData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    keyword = db.Column(db.String(50))
+    last_update = db.Column(db.DateTime())
+    news1 = db.Column(db.Text())
+    news2 = db.Column(db.Text())
+    news3 = db.Column(db.Text())
