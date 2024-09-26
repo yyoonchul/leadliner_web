@@ -72,7 +72,7 @@ def withdraw():
         # 세션 클리어
         session.clear()
         current_app.logger.info(f'user{user_id}, mypage/account, withdraw')
-        return jsonify(success=True, redirect_url=url_for('auth.signup'))
+        return jsonify(success=True, redirect_url=url_for('auth.landing'))
     
     except Exception as e:
         current_app.logger.error(f"Error occurred: {str(e)}")
