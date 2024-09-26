@@ -62,16 +62,31 @@ class MakeUserNews:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are a news summarizer specialized in stock news briefings. Summarize the news headlines into three main topics. Each summary should be a single sentence."},
-                {"role": "user", "content": f"오늘의 뉴스 헤드라인을 모아놓은 다음 텍스트를 읽고 3개의 주요 뉴스를 요약해줘. 각각의 요약은 한 문장으로 적어줘. 번호 없이 문장만을 적어주고 각 문장을 줄바꿈으로 구분해줘.:\n\n{text}"},
+                {"role": "system", "content": "You are a news summarizer specialized in stock news briefings."},
+                {"role": "user", "content": f"오늘의 뉴스 헤드라인을 모아놓은 다음 텍스트를 읽고 3개의 주요 뉴스를 요약해줘. 각각의 요약은 한 문장으로 적어줘. 주제가 바뀌면 줄바꿈으로 구분해서 총 두번의 줄바꿈으로 구분해줘. 번호 없이 문장만을 적어줘.:\n\n{text}"},
                 ]
         )
 
         summary = response.choices[0].message.content
         summary_list = summary.strip().split('\n')
+        if len(summary_list) >3:
+            for item in summary_list:
+                if item == "":
+                    summary_list.remove(item)
         return summary_list
 
     def make_user_news(self, keyword:str):
         news = self.get_naver_news(keyword, 30)
         summary = self.summarize_news(news)
-        return summary
+        if len(summary) == 3:
+            return summary
+        elif len(summary) > 3:
+            for item in summary:
+                if item == "":
+                    summary.remove(item)
+            return summary[:3]
+        else:
+            while len(summary) < 3:
+                summary.append("")
+            return summary
+    

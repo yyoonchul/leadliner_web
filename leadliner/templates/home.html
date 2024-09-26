@@ -63,11 +63,18 @@
                 </section>
                 <section class="news-summary">
                     <h2>뉴스 요약</h2>
-                    <p>AI가 요약한 오늘의 <b>{{news['name']}}</b> 뉴스입니다.</p>
+                    <p><span class="news-bullet">&#9670;</span>AI가 요약한 오늘의 <b>{{news['name']}}</b> 뉴스입니다.</p>
                     <div class="news-summary-item">
-                        <p>{{news['news'][0]}}</p>
-                        <p>{{news['news'][1]}}</p>
-                        <p>{{news['news'][2]}}</p>
+                        <div class="loading">
+                            <span class="loading-icon">&#9670;</span>
+                            <span class="loading-text">
+                                <span>A</span><span>I</span><span>가</span>
+                                <span>오</span><span>늘</span><span>의</span>
+                                <span>뉴</span><span>스</span><span>를</span>
+                                <span>요</span><span>약</span><span>하</span><span>고</span>
+                                <span>있</span><span>습</span><span>니</span><span>다</span>
+                            </span>
+                        </div>
                     </div>
                 </section>
                 <section class="news-links">
@@ -119,12 +126,12 @@
         </small>
     </p>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-         function toggleDropdown() {
+
+        function toggleDropdown() {
             document.getElementById("myDropdown").classList.toggle("show");
         }
-
         // 드롭다운 메뉴 외부를 클릭하면 메뉴가 닫히도록 설정
         window.onclick = function(event) {
             if (!event.target.matches('.mypage-button')) {
@@ -136,87 +143,135 @@
                     }
                 }
             }
-        }   
+        }  
+
+        $(document).ready(function() {
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    function loadNewsData() {
+        $('.stock-news').each(function() {
+            var $this = $(this);
+            var keyword = $this.find('.stock-item .stock-name').text().trim();
+            var $newsSummary = $this.find('.news-summary-item');
+
+            $.ajax({
+                url: '/get_news_data',
+                method: 'POST',
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
+                data: JSON.stringify({ keyword: keyword }),
+                success: function(data) {
+                    console.log('Received data:', data);  // 데이터 로깅
+                    if (Array.isArray(data) && data.length === 3) {
+                        $newsSummary.empty(); // 기존 내용 삭제
+                        typeWriterSequence($newsSummary, data, 0);
+                    } else {
+                        $newsSummary.html('<p>뉴스 데이터 형식이 올바르지 않습니다.</p>');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error:', textStatus, errorThrown);  // 오류 로깅
+                    $newsSummary.html('<p>뉴스를 불러오는 데 실패했습니다.</p>');
+                }
+            });
+        });
+    }
+    
+    function typeWriterSequence($container, dataArray, index) {
+    if (index < dataArray.length) {
+        var $p = $('<p>').addClass('typing-effect').appendTo($container);
+        typeWriter($p, dataArray[index], 0, function() {
+            setTimeout(function() {
+                typeWriterSequence($container, dataArray, index + 1);
+            }, 250); // 다음 문장으로 넘어가기 전 대기
+        });
+    }
+}
+
+    function typeWriter($element, text, i, callback) {
+    if (i < text.length) {
+        $element.text($element.text() + text.charAt(i));
+        setTimeout(function() {
+            typeWriter($element, text, i + 1, callback);
+        }, Math.random() * 20 + 20); //  랜덤한 간격으로 타이핑
+    } else {
+        $element.removeClass('typing-effect');
+        if (callback) callback();
+    }
+}
+
+    // 페이지 로드 후 뉴스 데이터 로딩 시작
+    loadNewsData();
 
 
-        //사이드 바
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('.sidebar');
-    const container = document.querySelector('.container');
-    const keywordItems = document.querySelectorAll('.keyword-item');
-    const newsArticles = document.querySelectorAll('.stock-news');
+    // 사이드바 관련 코드
+    const $sidebar = $('.sidebar');
+    const $container = $('.container');
+    const $keywordItems = $('.keyword-item');
+    const $newsArticles = $('.stock-news');
 
     // 스크롤 이벤트 리스너
-    window.addEventListener('scroll', function() {
-        highlightKeyword();
-    });
+    $(window).scroll(highlightKeyword);
 
     // 키워드 클릭 이벤트 리스너
-    keywordItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const keyword = this.textContent.trim();
-            const targetArticle = Array.from(newsArticles).find(article => 
-                article.querySelector('.stock-name').textContent.trim() === keyword
-            );
-            if (targetArticle) {
-                const offset = targetArticle.offsetTop - 30; // 상단에서 100px 떨어진 위치로 스크롤
-                window.scrollTo({
-                    top: offset,
-                    behavior: 'smooth'
-                });
-            }
+    $keywordItems.click(function() {
+        const keyword = $(this).text().trim();
+        const $targetArticle = $newsArticles.filter(function() {
+            return $(this).find('.stock-name').text().trim() === keyword;
         });
+        if ($targetArticle.length) {
+            $('html, body').animate({
+                scrollTop: $targetArticle.offset().top - 30
+            }, 500);
+        }
     });
 
     // 현재 보이는 뉴스에 해당하는 키워드 강조
     function highlightKeyword() {
-        let currentArticle = null;
-        newsArticles.forEach(article => {
-            const rect = article.getBoundingClientRect();
+        let $currentArticle = null;
+        $newsArticles.each(function() {
+            const rect = this.getBoundingClientRect();
             if (rect.top <= 100 && rect.bottom >= 100) {
-                currentArticle = article;
+                $currentArticle = $(this);
+                return false;
             }
         });
 
-        if (currentArticle) {
-            const keyword = currentArticle.querySelector('.stock-name').textContent.trim();
-            keywordItems.forEach(item => {
-                if (item.textContent.trim() === keyword) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
+        if ($currentArticle) {
+            const keyword = $currentArticle.find('.stock-name').text().trim();
+            $keywordItems.removeClass('active').filter(function() {
+                return $(this).text().trim() === keyword;
+            }).addClass('active');
         }
     }
 
     // 초기 키워드 강조
     highlightKeyword();
-});
 
-// 링크 클릭 로깅
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOMContentLoaded event fired');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            console.log('Link clicked');
-            fetch('/log_click', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrfToken
-                },
-                body: JSON.stringify({
-                    clicked: true
-                })
-            }).then(response => response.json())
-              .then(data => console.log('Server response:', data))
-              .catch(error => console.error('Error:', error));
+    // 링크 클릭 로깅
+    $('a').click(function(e) {
+        console.log('Link clicked');
+        $.ajax({
+            url: '/log_click',
+            method: 'POST',
+            contentType: 'application/json',
+            headers: {
+                'X-CSRFToken': csrfToken
+            },
+            data: JSON.stringify({
+                clicked: true
+            }),
+            success: function(data) {
+                console.log('Server response:', data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Error:', textStatus, errorThrown);
+            }
         });
     });
 });
-    </script>
+</script>
 </body>
 </html>

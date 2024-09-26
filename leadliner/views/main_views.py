@@ -61,7 +61,7 @@ def get_news_data(keyword):
         )
         db.session.add(new_data)
         db.session.commit()
-        return news 
+        return [news[0], news[1], news[2]] 
     
     elif current_time - news_data.last_update > timedelta(hours=1):
         make_user_news = MakeUserNews()
@@ -71,7 +71,7 @@ def get_news_data(keyword):
         news_data.news3 = news[2]
         news_data.last_update = current_time
         db.session.commit()
-        return news 
+        return [news[0], news[1], news[2]] 
     
     else:
         
@@ -113,16 +113,16 @@ def home():
     get_stock_price = GetStockPrice()
     news_data = [get_stock_info(stock, get_stock_price) for stock in stock_list]
 
-    for data in news_data:
-        data['news'] = get_news_data(data['name'])
+    # for data in news_data:
+    #     data['news'] = get_news_data(data['name'])
 
     return render_template('home.html', nickname=user.username, news_data=news_data, keyword_list=keyword_list)
 
-# @bp.route('/get_news_data', methods=['POST'])
-# def get_news_data_route():
-#     keyword = request.json['keyword']
-#     news = get_news_data(keyword)
-#     return jsonify(news)
+@bp.route('/get_news_data', methods=['POST'])
+def get_news_data_route():
+    keyword = request.json['keyword']
+    news = get_news_data(keyword)
+    return jsonify(news)
 
 
 @bp.route('/log_click', methods=['POST'])
