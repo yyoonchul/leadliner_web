@@ -223,22 +223,30 @@ h1{
 }
 
 .news-source-btn.naver{
-    background-color: #efffeee5;
+    background-color: #eee;
+    color: #26a51de5;
+    /* background-color: #efffeee5; */
     /* border: 1px solid #fd9e32e5; */
 }
 
 .news-source-btn.reuters{
-    background-color: #f7f2ece5;
+    background-color: #eee;
+    color: #d88b2de5;
+    /* background-color: #f7f2ece5; */
     /* border: 1px solid #fd9e32e5; */
 }
 
 .news-source-btn.cnbc{
-    background-color: #f1f2fde5;
+    background-color: #eee;
+    color: #141e92e5;
+    /* background-color: #f1f2fde5; */
     /* border: 1px solid #2338f3e5; */
 }
 
 .news-source-btn.yahoo{
-    background-color: #f9f3ffea;
+    background-color: #eee;
+    color: #51178bea;
+    /* background-color: #f9f3ffea; */
     /* border: 1px solid #9543ffe5; */
 }
 
