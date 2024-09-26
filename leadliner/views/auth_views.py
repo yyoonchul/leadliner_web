@@ -11,7 +11,7 @@ from leadliner.models import UserData
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
-@bp.route('/')
+@bp.route('/landing')
 def landing():
     current_app.logger.info('non-member, auth/landing, view')
     return render_template('landing.html')
