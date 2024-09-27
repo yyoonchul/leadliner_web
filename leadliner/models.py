@@ -13,7 +13,7 @@ class UserData(db.Model):
 class KeywordData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ko_name = db.Column(db.String(50))
-    en_name = db.Column(db.String(50))
+    en_name = db.Column(db.String(100))
     stock_code = db.Column(db.String(10), nullable=False, unique=True)
     korea_stock = db.Column(db.Boolean(), nullable=False, default=False)
 
@@ -26,7 +26,7 @@ class TopKeywordData(db.Model):
 
 class KeywordNewsData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    keyword = db.Column(db.String(50))
+    keyword = db.Column(db.String(100))
     last_update = db.Column(db.DateTime())
     news1 = db.Column(db.Text())
     news2 = db.Column(db.Text())
