@@ -332,13 +332,29 @@ a{
 
 @media (max-width: 768px) {
     .container {
-        flex-direction: column;
+        padding: 10px;
     }
-    .image-section {
-        display: none;
+
+    .logo {
+        max-width: 150px;
     }
-    .form-section {
+
+    .login-form, .signup-form {
+        max-width: 80%;
+        padding: 20px;
+    }
+
+    .input-group {
         width: 100%;
-        box-sizing: border-box;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 10px;
+    }
+
+    button[type="submit"] {
+        padding: 12px 0;
     }
 }

@@ -280,8 +280,44 @@ p {
 }
 
 @media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: 1.2em;
+    }
+
+    .btn {
+        width: 250px;
+        padding: 12px 0;
+        font-size: 1em;
+    }
+
+    .logo {
+        max-width: 150px;
+    }
+
+    .character-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .character-text p {
+        font-size: 1em;
+    }
+
+    .description-content {
+        padding: 20px;
+    }
+
+    .cta-container {
+        margin-top: 30px;
+    }
+
     .character-section {
         flex-direction: column;
+        align-items: center;
     }
 
     .character-w, .character-m {
@@ -306,10 +342,6 @@ p {
 
     .character-w .character-img {
         margin-right: 0;
-    }
-
-    .description .btn {
-        width: 250px;
     }
 }
 

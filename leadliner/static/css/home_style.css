@@ -310,6 +310,10 @@ h1{
     padding: 10px 0 0 15px;
 }
 
+#contact-footer{
+    display: none;
+}
+
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -333,7 +337,14 @@ h1{
 
     h1 {
         font-size: 1.5em;
-        margin-bottom: 15px;
+    }
+
+    .news-area{
+        width: 100%;
+    }
+
+    .stock-news{
+        padding: 10px;
     }
 
     .news-article {
@@ -350,24 +361,41 @@ h1{
         padding: 3px 8px;
     }
 
+    .news-source-btn{
+        padding: 5px 5px;
+        font-weight: 100;
+    }
+
     .article-link {
         font-size: 0.9em;
     }
 
-    .sidebar h2 {
-        display: none; /* '키워드' 제목 숨김 */
+    .sidebar{
+        display: none; 
     }
 
     #keyword-list{
         font-size: 10px;
     }
 
-    .contact-info{
-        display: none;
-        height: 0;
+    .investor-info{
+        font-size: 12px;
+        padding: 5px;
     }
-    .sidebar.investor-info{
-        display: none;
+
+    footer a{
+        text-decoration: none;
+        color: var(--main_black);
+    }
+
+    #contact-footer{
+        display: block;
+    }
+
+    .contact-info{
+        font-size: 14px;
+        padding: 5px;
+        font-weight: bold;
     }
 }
 

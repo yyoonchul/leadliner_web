@@ -597,10 +597,20 @@ body {
         width: 100%;
     }
 
+    .suggested-container{
+        display: none;
+    }
+
     .custom-keyword {
         width: calc(50% - 20px);
         margin: 10px auto;
         padding: 5px 10px;
         font-size: 1em;
+    }
+
+    .withdraw-modal-content {
+        width: 80%;
+        height: 300px;
+        max-width: 500px;
     }
 }
