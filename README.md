@@ -15,3 +15,5 @@ LeadLiner는 투자자들을 위한 맞춤형 주식 뉴스 AI 요약 서비스�
   <li>Database: PostgreSQL</li>
   <li>LLM: CHat GPT API</li>
 </ul>
+
+*현재 사이트는 운영 되지 않고 있습니다 :)
