@@ -10,7 +10,8 @@ LeadLiner는 투자자들을 위한 맞춤형 주식 뉴스 AI 요약 서비스�
 </ul>
 
 기술 스택 🛠
-
-Backend: Python (Flask)
-Database: PostgreSQL
-LLM: CHat GPT API
+<ul>
+  <li>Backend: Python (Flask)</li>
+  <li>Database: PostgreSQL</li>
+  <li>LLM: CHat GPT API</li>
+</ul>
